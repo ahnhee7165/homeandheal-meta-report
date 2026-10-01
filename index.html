@@ -187,6 +187,9 @@ function sum(rows) {
   s.ctr = s.impressions ? s.link_clicks / s.impressions : 0;
   s.cpc = s.link_clicks ? s.spend / s.link_clicks : 0;
   s.cpa = s.purchases ? s.spend / s.purchases : 0;
+  s.cpm = s.impressions ? s.spend / s.impressions * 1000 : 0;
+  s.atc_rate = s.link_clicks ? s.add_to_cart / s.link_clicks : 0;
+  s.cvr = s.link_clicks ? s.purchases / s.link_clicks : 0;
   s.roas = s.spend ? s.purchase_value / s.spend : 0;
   s.hook = s.impressions ? s.video_views / s.impressions : 0;
   return s;
@@ -296,6 +299,16 @@ const ADSET_CAMP = {};
 /* ---------- 연령·성별·플랫폼·노출위치·기기 ---------- */
 const BD = {}; // 파일별 캐시 (열 때 한 번만 불러옴)
 let AUD = "age", audChart = null;
+let TRAFFIC = "imp", trafficChart = null;
+// 유입 추이에서 고를 수 있는 지표: [막대(왼쪽 축), 선(오른쪽 축)]
+const TRAFFIC_VIEWS = {
+  imp:  { label: "노출·클릭", bar: ["impressions", "노출", fmtN], line: ["link_clicks", "링크 클릭", fmtN] },
+  ctr:  { label: "CTR", bar: ["impressions", "노출", fmtN], line: ["ctr", "CTR (링크)", fmtP, 100, "%"] },
+  cpc:  { label: "CPC", bar: ["link_clicks", "링크 클릭", fmtN], line: ["cpc", "CPC (링크)", fmtW] },
+  cpm:  { label: "CPM", bar: ["impressions", "노출", fmtN], line: ["cpm", "CPM", fmtW] },
+  atc:  { label: "장바구니", bar: ["add_to_cart", "장바구니", fmtN], line: ["atc_rate", "장바구니율 (클릭 대비)", fmtP, 100, "%"] },
+  cvr:  { label: "구매전환율", bar: ["purchases", "구매", fmtN], line: ["cvr", "구매전환율 (클릭 대비)", fmtP, 100, "%"] },
+};
 const PLATFORM = { facebook: "페이스북", instagram: "인스타그램", audience_network: "Audience Network", messenger: "메신저", threads: "스레드" };
 const POSITION = {
   feed: "피드", story: "스토리", facebook_stories: "스토리", instagram_stories: "스토리", reels: "릴스", facebook_reels: "릴스", instagram_reels: "릴스",
@@ -392,7 +405,10 @@ function render() {
 
   if (SECTION === "summary") {
     html += `<div class="kpis">${kpiHtml(sum(cur), sum(prev))}</div>`;
-    html += `<div class="card"><h2>일별 추이 <small>지출 vs 구매전환값</small></h2><div class="chart-box"><canvas id="trend"></canvas></div></div>`;
+    html += `<div class="card"><h2>전환 추이 <small>지출 vs 구매전환값</small></h2><div class="chart-box"><canvas id="trend"></canvas></div></div>`;
+    html += `<div class="card"><h2>유입 추이 <small>일별 ${TRAFFIC_VIEWS[TRAFFIC].bar[1]} · ${TRAFFIC_VIEWS[TRAFFIC].line[1]}</small></h2>
+      <div class="cr-head" style="margin-bottom:12px"><div class="seg">${Object.entries(TRAFFIC_VIEWS).map(([k, v]) => `<button data-traffic="${k}" class="${k === TRAFFIC ? "on" : ""}">${v.label}</button>`).join("")}</div></div>
+      <div class="chart-box"><canvas id="traffic"></canvas></div></div>`;
     if (!acc) {
       html += `<div class="card"><h2>계정별 성과 ${cmp}</h2><div class="table-wrap">${breakdownTable("acc", cur, prev, r => ACC[r.account_id]?.name || r.account_id, { label: "계정", total: true, bar: true })}</div></div>`;
     } else if (groups) {
@@ -437,7 +453,7 @@ function render() {
 
   const box = document.getElementById("content");
   box.innerHTML = html;
-  if (SECTION === "summary") drawTrend(cur, since, until);
+  if (SECTION === "summary") { drawTrend(cur, since, until); drawTraffic(cur, since, until); }
   if (SECTION === "audience") drawAudChart();
 
   box.querySelectorAll("th[data-t]").forEach(th => th.onclick = () => {
@@ -446,9 +462,42 @@ function render() {
   });
   box.querySelectorAll("button[data-cr]").forEach(b => b.onclick = () => { CRTYPE[b.dataset.cr] = b.dataset.type; render(); });
   box.querySelectorAll("button[data-aud]").forEach(b => b.onclick = () => { AUD = b.dataset.aud; render(); });
+  box.querySelectorAll("button[data-traffic]").forEach(b => b.onclick = () => { TRAFFIC = b.dataset.traffic; render(); });
   const ac = document.getElementById("adsetCamp");
   if (ac) ac.onchange = () => { ADSET_CAMP[ACCOUNT] = ac.value; render(); };
   box.querySelectorAll(".minspend").forEach(s => s.onchange = () => { MIN_SPEND = +s.value; render(); });
+}
+
+function drawTraffic(cur, since, until) {
+  const el = document.getElementById("traffic");
+  if (!el || typeof Chart === "undefined") return;
+  const v = TRAFFIC_VIEWS[TRAFFIC];
+  const dates = []; for (let d = since; d <= until; d = addDays(d, 1)) dates.push(d);
+  const byDate = {}; for (const r of cur) (byDate[r.date] ||= []).push(r);
+  const daily = dates.map(d => sum(byDate[d] || []));
+  const [bk, bl, bf] = v.bar, [lk, ll, lf, lmul = 1, lsuf = ""] = v.line;
+  const css = getComputedStyle(document.documentElement), col = c => css.getPropertyValue(c).trim();
+  const short = n => n >= 10000 ? (n / 10000).toLocaleString(undefined, { maximumFractionDigits: 1 }) + "만" : Math.round(n).toLocaleString();
+  if (trafficChart) trafficChart.destroy();
+  trafficChart = new Chart(el, {
+    data: {
+      labels: dates.map(d => d.slice(5)),
+      datasets: [
+        { type: "bar", label: bl, data: daily.map(s => s[bk]), backgroundColor: "#c7dafc", yAxisID: "y", borderRadius: 3, order: 2 },
+        { type: "line", label: ll, data: daily.map(s => s[lk] * lmul), borderColor: "#0ea5a4", backgroundColor: "#0ea5a4", yAxisID: "y1", order: 1, borderWidth: 2.5, tension: 0.3, pointRadius: dates.length > 60 ? 0 : 2 },
+      ],
+    },
+    options: {
+      maintainAspectRatio: false, interaction: { mode: "index", intersect: false },
+      plugins: { legend: { labels: { color: col("--muted") } },
+        tooltip: { callbacks: { label: x => x.dataset.yAxisID === "y" ? `${bl}: ${bf(x.raw)}` : `${ll}: ${lf(x.raw / lmul)}` } } },
+      scales: {
+        x: { ticks: { color: col("--muted"), maxTicksLimit: 16 }, grid: { display: false } },
+        y: { position: "left", ticks: { color: col("--muted"), callback: short }, grid: { color: col("--line") } },
+        y1: { position: "right", ticks: { color: col("--muted"), callback: n => lsuf ? n.toFixed(1) + lsuf : (lf === fmtW ? "₩" : "") + short(n) }, grid: { display: false } },
+      },
+    },
+  });
 }
 
 function drawTrend(cur, since, until) {
