@@ -28,7 +28,7 @@ DATA_DIR = ROOT / "data"
 KST = timezone(timedelta(hours=9))
 
 TOKEN = os.environ.get("META_ACCESS_TOKEN", "").strip()
-API_VERSION = os.environ.get("META_API_VERSION", "v26.0").strip()
+API_VERSION = (os.environ.get("META_API_VERSION") or "").strip() or "v26.0"
 LOOKBACK_DAYS = int(os.environ.get("LOOKBACK_DAYS", "7") or 7)
 SINCE = os.environ.get("SINCE", "").strip()
 UNTIL = os.environ.get("UNTIL", "").strip()
