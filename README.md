@@ -13,7 +13,9 @@
 | `scripts/fetch_meta.py` | 메타 API에서 일자 × 광고세트 단위 데이터를 받아 `data/`에 저장 |
 | `.github/workflows/fetch.yml` | 매일 한국시간 오전 7시 자동 실행, 결과를 저장소에 커밋 |
 | `index.html` | 대시보드 (기간 선택, 계정 탭, 직전 기간 대비 증감, CSV 다운로드) |
-| `data/daily.csv`, `data/daily.json` | 수집 결과 (첫 실행 후 자동 생성) |
+| `data/daily.csv`, `data/daily.json` | 광고세트 일별 성과 (첫 실행 후 자동 생성) |
+| `data/ads.json`, `data/creatives.json`, `data/creatives/` | 소재(광고) 일별 성과, 소재 유형, 썸네일 |
+| `data/bd_age.json` 외 3개 | 연령·성별·노출위치·기기별 캠페인 성과 |
 
 ## 세팅 순서
 

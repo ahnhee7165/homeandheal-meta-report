@@ -1,9 +1,15 @@
 {
   "client": "Home and Heal",
   "accounts": [
-    { "id": "456254580008371",  "name": "홈앤힐 자사몰",            "type": "own" },
+    {
+      "id": "456254580008371", "name": "홈앤힐 자사몰", "type": "own",
+      "groups": [
+        { "name": "쉬어", "match": "쉬어" },
+        { "name": "자사몰", "match": "" }
+      ]
+    },
     { "id": "1321099275646928", "name": "네이버 브랜드스토어 협력광고", "type": "collab" },
-    { "id": "756914043795163",  "name": "오늘의집 협력광고",          "type": "collab" },
+    { "id": "756914043795163",  "name": "오늘의집 협력광고",          "type": "collab", "name_prefix": "homeandheal_" },
     { "id": "4158809747668597", "name": "CJ온스타일 협력광고",        "type": "collab" }
   ]
 }

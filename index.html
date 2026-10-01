@@ -9,58 +9,91 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   :root {
-    --bg: #f6f5f2; --card: #ffffff; --ink: #1d1c1a; --muted: #6f6b64; --line: #e5e2dc;
-    --accent: #2f5d50; --accent-soft: #e3ece8; --up: #1f7a4d; --down: #b3412f;
-    --s1: #2f5d50; --s2: #c98b3b; --s3: #5873a8; --s4: #9a5b8c;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #171716; --card: #21201e; --ink: #ecebe7; --muted: #a29e96; --line: #34322f;
-      --accent: #7fb8a5; --accent-soft: #263430; --up: #6cc495; --down: #e57d69;
-      --s1: #7fb8a5; --s2: #e0ac62; --s3: #8ea6d6; --s4: #c690bb;
-    }
+    color-scheme: light;
+    --bg: #f3f6fc; --card: #ffffff; --ink: #14213d; --muted: #66728a; --line: #e2e8f4; --soft: #f5f8ff;
+    --accent: #2563eb; --accent-2: #3b82f6; --accent-soft: #e8f0ff; --up: #0f9d6a; --down: #e0473c;
+    --bar: #9cc0fb; --lineclr: #1d4ed8; --gold: #f2a516;
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Noto Sans KR", system-ui, sans-serif; font-size: 14px; }
-  .wrap { max-width: 1240px; margin: 0 auto; padding: 28px 16px 60px; }
-  header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; margin-bottom: 20px; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 16px; }
+  .hero { background: linear-gradient(120deg, #1d4ed8 0%, #2563eb 45%, #4f8ff7 100%); color: #fff; }
+  .hero-in { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 14px; padding: 26px 16px 64px; }
   h1 { font-size: 22px; margin: 0; letter-spacing: -0.02em; }
-  .sub { color: var(--muted); font-size: 12px; margin-top: 4px; }
-  .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-  select, input[type=date], button {
-    font: inherit; font-size: 13px; padding: 7px 10px; border: 1px solid var(--line);
-    background: var(--card); color: var(--ink); border-radius: 8px;
-  }
+  .sub { color: rgba(255,255,255,.8); font-size: 12px; margin-top: 6px; }
+  .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; color: rgba(255,255,255,.85); }
+  select, input[type=date], button { font: inherit; font-size: 13px; padding: 7px 10px; border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 8px; }
+  .hero select, .hero input, .hero button { border-color: transparent; }
   button { cursor: pointer; }
-  button.primary { background: var(--accent); color: var(--card); border-color: var(--accent); }
-  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
-  .tab { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); font-size: 13px; cursor: pointer; }
-  .tab.on { background: var(--ink); color: var(--card); border-color: var(--ink); }
+  .hero #csv { background: rgba(255,255,255,.16); color: #fff; border: 1px solid rgba(255,255,255,.45); }
+  .panel { background: var(--card); border-radius: 16px; box-shadow: 0 6px 24px rgba(37,99,235,.08); margin-top: -44px; position: relative; }
+  .acc-tabs { display: flex; flex-wrap: wrap; gap: 6px; padding: 14px 16px 0; }
+  .tab { padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); font-size: 13px; font-weight: 500; color: var(--muted); }
+  .tab:hover { border-color: var(--accent-2); color: var(--accent); }
+  .tab.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .sec-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 8px; padding: 10px 16px 0; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--card); z-index: 5; border-radius: 0 0 0 0; }
+  .sec-tabs { display: flex; gap: 2px; overflow-x: auto; }
+  .sec { border: none; background: none; border-radius: 0; padding: 10px 14px 12px; font-size: 14px; font-weight: 500; color: var(--muted); border-bottom: 3px solid transparent; white-space: nowrap; }
+  .sec:hover { color: var(--accent); }
+  .sec.on { color: var(--accent); border-bottom-color: var(--accent); font-weight: 700; }
+  .grp { display: inline-flex; background: var(--soft); border-radius: 10px; padding: 3px; margin-bottom: 8px; }
+  .grp button { border: none; background: none; padding: 6px 14px; border-radius: 8px; font-size: 13px; color: var(--muted); }
+  .grp button.on { background: var(--card); color: var(--accent); font-weight: 700; box-shadow: 0 1px 4px rgba(20,33,61,.12); }
+  #content { padding: 20px 16px 24px; min-height: 420px; }
   .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; }
   @media (max-width: 860px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
-  .kpi { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .kpi { background: var(--soft); border-radius: 12px; padding: 14px 16px; border-top: 3px solid var(--accent-2); }
   .kpi .label { color: var(--muted); font-size: 12px; }
-  .kpi .val { font-size: 22px; font-weight: 700; margin-top: 4px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .kpi .val { font-size: 21px; font-weight: 700; margin-top: 4px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
   .kpi .delta { font-size: 12px; margin-top: 2px; font-variant-numeric: tabular-nums; }
   .up { color: var(--up); } .down { color: var(--down); } .flat { color: var(--muted); }
   .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
   .card h2 { font-size: 15px; margin: 0 0 12px; display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
   .card h2 small { font-weight: 400; color: var(--muted); font-size: 12px; }
-  .chart-box { position: relative; height: 280px; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 960px) { .duo { grid-template-columns: 1fr; } }
+  .duo .kpis { grid-template-columns: repeat(2, 1fr); margin: 0; }
+  .gtitle { font-size: 16px; font-weight: 700; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+  .gtitle .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+  .gtitle .share { margin-left: auto; font-size: 12px; font-weight: 500; color: var(--accent); background: var(--accent-soft); padding: 2px 8px; border-radius: 999px; }
+  .chart-box { position: relative; height: 260px; }
   .table-wrap { overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
-  th, td { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
-  th { color: var(--muted); font-weight: 500; font-size: 12px; cursor: pointer; user-select: none; }
-  th:first-child, td:first-child { text-align: left; white-space: normal; min-width: 200px; }
-  tr.total td { font-weight: 700; border-top: 2px solid var(--ink); }
+  th, td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+  th { color: var(--muted); font-weight: 500; font-size: 12px; cursor: pointer; user-select: none; background: var(--soft); }
+  th:first-child, td:first-child { text-align: left; white-space: normal; min-width: 130px; }
+  tbody tr:hover td, tr:hover td { background: #fafcff; }
+  tr.total td { font-weight: 700; border-top: 2px solid var(--accent); background: var(--accent-soft); }
+  .bar { height: 4px; background: var(--accent-2); border-radius: 2px; margin-top: 4px; opacity: .7; }
   .badge { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 4px; margin-left: 6px; background: var(--accent-soft); color: var(--accent); vertical-align: 1px; }
+  .warn { background: #fff7e6; border: 1px solid #ffd99a; color: #8a5a00; border-radius: 10px; padding: 10px 12px; font-size: 12px; line-height: 1.6; margin-bottom: 14px; }
   .note { color: var(--muted); font-size: 12px; line-height: 1.6; }
-  .empty { text-align: center; color: var(--muted); padding: 40px 0; }
+  .foot { padding: 16px 4px 40px; }
+  .empty { text-align: center; color: var(--muted); padding: 28px 0; }
+  .seg { display: inline-flex; background: var(--soft); border-radius: 10px; padding: 3px; }
+  .seg button { border: none; background: none; border-radius: 8px; padding: 6px 12px; color: var(--muted); }
+  .seg button.on { background: var(--accent); color: #fff; font-weight: 700; }
+  .cr-head { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+  .cr-list h3 { font-size: 14px; margin: 18px 0 10px; color: var(--ink); font-weight: 700; display: flex; align-items: center; gap: 6px; }
+  .cr-list h3::before { content: ""; width: 4px; height: 14px; background: var(--accent); border-radius: 2px; }
+  .cr-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  @media (max-width: 960px) { .cr-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 560px) { .cr-grid { grid-template-columns: repeat(2, 1fr); } }
+  .cr { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--card); position: relative; transition: box-shadow .15s; }
+  .cr:hover { box-shadow: 0 6px 18px rgba(37,99,235,.14); }
+  .cr .thumb { aspect-ratio: 1 / 1; background: var(--soft); display: block; width: 100%; object-fit: cover; }
+  .cr .nothumb { aspect-ratio: 1 / 1; background: var(--soft); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 12px; }
+  .cr .rank { position: absolute; top: 8px; left: 8px; background: var(--accent); color: #fff; font-size: 12px; font-weight: 700; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 4px rgba(0,0,0,.2); }
+  .cr .rank.r1 { background: var(--gold); }
+  .cr .body { padding: 9px 10px 11px; }
+  .cr .name { font-size: 12px; line-height: 1.4; height: 34px; overflow: hidden; word-break: break-all; }
+  .cr .main { font-size: 16px; font-weight: 700; margin-top: 6px; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .cr .meta { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.5; font-variant-numeric: tabular-nums; }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
+<div class="hero">
+  <div class="wrap hero-in">
     <div>
       <h1>Home and Heal 메타 광고 리포트</h1>
       <div class="sub" id="updated">데이터 불러오는 중…</div>
@@ -78,98 +111,104 @@
       <input type="date" id="since"> <span>~</span> <input type="date" id="until">
       <button id="csv">CSV 다운로드</button>
     </div>
-  </header>
-
-  <div class="tabs" id="tabs"></div>
-
-  <div class="kpis" id="kpis"></div>
-
-  <div class="card">
-    <h2>일별 추이 <small>지출 vs 구매전환값</small></h2>
-    <div class="chart-box"><canvas id="trend"></canvas></div>
   </div>
+</div>
 
-  <div class="card">
-    <h2>계정별 성과 <small id="cmpLabel"></small></h2>
-    <div class="table-wrap"><table id="accTable"></table></div>
+<div class="wrap">
+  <div class="panel">
+    <nav class="acc-tabs" id="tabs"></nav>
+    <div class="sec-bar">
+      <div class="sec-tabs" id="sections"></div>
+      <div id="groupbar"></div>
+    </div>
+    <div id="content"></div>
   </div>
-
-  <div class="card">
-    <h2>캠페인별 성과 <small>열 제목을 누르면 정렬</small></h2>
-    <div class="table-wrap"><table id="campTable"></table></div>
-  </div>
-
-  <p class="note">
-    협력광고 계정<span class="badge">협력</span>의 구매·장바구니·전환값은 광고관리자의 <b>공유 항목 포함</b> 기준이고,
-    자사몰 계정은 픽셀 기준 일반 구매 지표입니다. 비교 기간은 선택 기간과 같은 길이의 직전 기간입니다.
-    전환은 기여 기간 동안 늦게 잡히므로 최근 7일 값은 매일 다시 받아 갱신됩니다.
+  <p class="note foot">
+    협력광고 계정<span class="badge">협력</span>의 구매·장바구니·전환값은 광고관리자의 <b>공유 항목 포함</b> 기준이고, 자사몰 계정은 픽셀 기준 일반 구매 지표입니다.
+    증감은 선택 기간과 같은 길이의 직전 기간과 비교합니다. 행사명과 일반/키즈는 캠페인명에서 읽어오고, 이름에 일반·키즈가 없으면 '기타'로 묶입니다.
+    소재는 같은 이미지·영상을 쓴 광고끼리 합산하며, ROAS 순위는 최소 지출 조건을 넘는 소재만 포함합니다.
   </p>
 </div>
 
 <script>
-const fmtW = n => "₩" + Math.round(n).toLocaleString("ko-KR");
-const fmtN = n => Math.round(n).toLocaleString("ko-KR");
-const fmtP = n => (n * 100).toFixed(2) + "%";
-const fmtR = n => (n * 100).toFixed(0) + "%";
+const fmtW = n => "₩" + Math.round(n || 0).toLocaleString("ko-KR");
+const fmtN = n => Math.round(n || 0).toLocaleString("ko-KR");
+const fmtP = n => ((n || 0) * 100).toFixed(2) + "%";
+const fmtR = n => ((n || 0) * 100).toFixed(0) + "%";
+const fmtS = n => ((n || 0) * 100).toFixed(1) + "%";
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const iso = d => d.toISOString().slice(0, 10);
 const addDays = (s, n) => { const d = new Date(s + "T00:00:00Z"); d.setUTCDate(d.getUTCDate() + n); return iso(d); };
 const daysBetween = (a, b) => Math.round((new Date(b) - new Date(a)) / 86400000) + 1;
+const unpack = d => d.columns ? d.rows.map(v => Object.fromEntries(d.columns.map((c, i) => [c, v[i]]))) : d.rows;
 
-let DATA = null, ACCOUNT = "all", chart = null, campSort = { key: "spend", dir: -1 };
+let DATA = null, ADS = [], CRE = {}, ACC = {}, ACCOUNT = "all", chart = null;
+const SORT = {}, CRTYPE = {};
+let MIN_SPEND = 50000;
 
+/* ---------- 기간 ---------- */
 function kstToday() { return iso(new Date(Date.now() + 9 * 3600 * 1000)); }
-
 function presetRange(p) {
-  const t = kstToday(), y = addDays(t, -1);
-  const td = new Date(t + "T00:00:00Z");
+  const t = kstToday(), y = addDays(t, -1), first = t.slice(0, 8) + "01";
   if (p === "yesterday") return [y, y];
   if (p === "last7") return [addDays(t, -7), y];
-  if (p === "lastweek") {
-    const dow = (td.getUTCDay() + 6) % 7; // 월=0
-    const thisMon = addDays(t, -dow);
-    return [addDays(thisMon, -7), addDays(thisMon, -1)];
-  }
-  if (p === "thismonth") return [t.slice(0, 8) + "01", y < t.slice(0, 8) + "01" ? t.slice(0, 8) + "01" : y];
-  if (p === "lastmonth") {
-    const first = t.slice(0, 8) + "01", lastEnd = addDays(first, -1);
-    return [lastEnd.slice(0, 8) + "01", lastEnd];
-  }
+  if (p === "lastweek") { const dow = (new Date(t + "T00:00:00Z").getUTCDay() + 6) % 7, mon = addDays(t, -dow); return [addDays(mon, -7), addDays(mon, -1)]; }
+  if (p === "thismonth") return [first, y < first ? first : y];
+  if (p === "lastmonth") { const end = addDays(first, -1); return [end.slice(0, 8) + "01", end]; }
   if (p === "thisyear") return [t.slice(0, 4) + "-01-01", y];
   return null;
 }
+function range() {
+  const since = document.getElementById("since").value, until = document.getElementById("until").value;
+  const len = daysBetween(since, until);
+  return { since, until, pSince: addDays(since, -len), pUntil: addDays(since, -1) };
+}
 
+/* ---------- 캠페인명 해석 ---------- */
+function parseName(name, acc) {
+  let n = String(name || "");
+  const pre = acc && acc.name_prefix;
+  if (pre && n.includes(pre)) n = n.slice(n.indexOf(pre) + pre.length);
+  const tokens = n.split("_").map(s => s.trim()).filter(Boolean);
+  const event = (tokens[0] || "기타").replace(/\s*\(.*\)\s*$/, "");
+  const k = /키즈/.test(n), g = /일반/.test(n);
+  return { event, seg: k && g ? "일반&키즈" : k ? "키즈" : g ? "일반" : "기타" };
+}
+function groupOf(campaignName, acc) {
+  if (!acc || !acc.groups) return null;
+  const hit = acc.groups.find(g => g.match && String(campaignName).includes(g.match));
+  return (hit || acc.groups.find(g => !g.match) || acc.groups[acc.groups.length - 1]).name;
+}
+
+/* ---------- 집계 ---------- */
 function sum(rows) {
-  const s = { spend: 0, impressions: 0, reach: 0, clicks: 0, link_clicks: 0, add_to_cart: 0, purchases: 0, purchase_value: 0 };
+  const s = { spend: 0, impressions: 0, reach: 0, clicks: 0, link_clicks: 0, add_to_cart: 0, purchases: 0, purchase_value: 0, video_views: 0 };
   for (const r of rows) for (const k in s) s[k] += +r[k] || 0;
   s.ctr = s.impressions ? s.link_clicks / s.impressions : 0;
   s.cpc = s.link_clicks ? s.spend / s.link_clicks : 0;
-  s.cpm = s.impressions ? s.spend / s.impressions * 1000 : 0;
   s.cpa = s.purchases ? s.spend / s.purchases : 0;
   s.roas = s.spend ? s.purchase_value / s.spend : 0;
+  s.hook = s.impressions ? s.video_views / s.impressions : 0;
   return s;
 }
-
-function filterRows(since, until) {
-  return DATA.rows.filter(r => r.date >= since && r.date <= until && (ACCOUNT === "all" || r.account_id === ACCOUNT));
+function inScope(r, accId, group) {
+  if (accId !== "all" && r.account_id !== accId) return false;
+  if (group && groupOf(r.campaign_name, ACC[r.account_id]) !== group) return false;
+  return true;
 }
+const between = (r, a, b) => r.date >= a && r.date <= b;
 
 function delta(cur, prev, inverse) {
-  if (!prev) return '<span class="flat">비교값 없음</span>';
+  if (!prev) return '<span class="flat">–</span>';
   const d = (cur - prev) / prev;
-  if (Math.abs(d) < 0.0005) return '<span class="flat">— 0.0%</span>';
+  if (Math.abs(d) < 0.0005) return '<span class="flat">0.0%</span>';
   const good = inverse ? d < 0 : d > 0;
   return `<span class="${good ? "up" : "down"}">${d > 0 ? "▲" : "▼"} ${Math.abs(d * 100).toFixed(1)}%</span>`;
 }
 
-function render() {
-  const since = document.getElementById("since").value, until = document.getElementById("until").value;
-  const len = daysBetween(since, until);
-  const pSince = addDays(since, -len), pUntil = addDays(since, -1);
-  const cur = filterRows(since, until), prev = filterRows(pSince, pUntil);
-  const c = sum(cur), p = sum(prev);
-  document.getElementById("cmpLabel").textContent = `비교: ${pSince} ~ ${pUntil}`;
-
-  const kpis = [
+/* ---------- 화면 조각 ---------- */
+function kpiHtml(c, p) {
+  return [
     ["지출", fmtW(c.spend), delta(c.spend, p.spend)],
     ["노출", fmtN(c.impressions), delta(c.impressions, p.impressions)],
     ["링크 클릭", fmtN(c.link_clicks), delta(c.link_clicks, p.link_clicks)],
@@ -178,72 +217,280 @@ function render() {
     ["구매", fmtN(c.purchases), delta(c.purchases, p.purchases)],
     ["구매전환값", fmtW(c.purchase_value), delta(c.purchase_value, p.purchase_value)],
     ["ROAS", fmtR(c.roas), delta(c.roas, p.roas)],
-  ];
-  document.getElementById("kpis").innerHTML = kpis.map(([l, v, d]) =>
-    `<div class="kpi"><div class="label">${l}</div><div class="val">${v}</div><div class="delta">${d}</div></div>`).join("");
+  ].map(([l, v, d]) => `<div class="kpi"><div class="label">${l}</div><div class="val">${v}</div><div class="delta">${d}</div></div>`).join("");
+}
 
-  // 추이 차트
+// 묶음별 성과 표 (행사명별, 일반/키즈별, 캠페인별, 계정별 공용)
+const BREAK_COLS = [
+  ["spend", "지출", fmtW], ["share", "비중", fmtS], ["impressions", "노출", fmtN], ["link_clicks", "링크클릭", fmtN],
+  ["ctr", "CTR", fmtP], ["purchases", "구매", fmtN], ["cpa", "CPA", fmtW], ["purchase_value", "구매전환값", fmtW], ["roas", "ROAS", fmtR],
+];
+function breakdownTable(id, cur, prev, keyFn, opts = {}) {
+  const groups = {}, pgroups = {};
+  for (const r of cur) { const k = keyFn(r); (groups[k] ||= []).push(r); }
+  for (const r of prev) { const k = keyFn(r); (pgroups[k] ||= []).push(r); }
+  const total = sum(cur), ptotal = sum(prev);
+  let list = Object.entries(groups).map(([k, rows]) => {
+    const s = sum(rows);
+    return { key: k, ...s, share: total.spend ? s.spend / total.spend : 0, proas: sum(pgroups[k] || []).roas, sub: opts.subFn ? opts.subFn(rows[0]) : "", label: opts.labelFn ? opts.labelFn(rows[0]) : k };
+  }).filter(x => x.spend > 0);
+  const st = SORT[id] || { key: "spend", dir: -1 };
+  if (st.key === "_order" && opts.order) list.sort((a, b) => opts.order.indexOf(a.key) - opts.order.indexOf(b.key));
+  else list.sort((a, b) => st.dir * ((a[st.key] || 0) - (b[st.key] || 0)));
+  const head = `<tr><th>${opts.label}</th>${BREAK_COLS.map(([k, l]) => `<th data-t="${id}" data-k="${k}">${l}${st.key === k ? (st.dir < 0 ? " ↓" : " ↑") : ""}</th>`).join("")}<th>ROAS 증감</th></tr>`;
+  if (!list.length) return `<table>${head}<tr><td colspan="11" class="empty">선택한 기간에 지출이 없습니다</td></tr></table>`;
+  const body = list.map(x => `<tr><td>${esc(x.label)}${x.sub}${opts.bar ? `<div class="bar" style="width:${Math.max(2, x.share * 100)}%"></div>` : ""}</td>${BREAK_COLS.map(([k, , f]) => `<td>${f(x[k])}</td>`).join("")}<td>${delta(x.roas, x.proas)}</td></tr>`).join("");
+  const tot = opts.total ? `<tr class="total"><td>합계</td>${BREAK_COLS.map(([k, , f]) => `<td>${k === "share" ? "100%" : f(total[k])}</td>`).join("")}<td>${delta(total.roas, ptotal.roas)}</td></tr>` : "";
+  return `<table>${head}${body}${tot}</table>`;
+}
+
+// 소재 성과 (이미지/영상/카탈로그 x ROAS TOP5 / 전환매출 TOP5)
+function creativeBlock(id, accId, group, since, until) {
+  const rows = ADS.filter(r => between(r, since, until) && inScope(r, accId, group));
+  const by = {};
+  for (const r of rows) {
+    const c = CRE[r.ad_id] || { type: "기타", key: "a_" + r.ad_id, thumb: "" };
+    const k = c.key;
+    const o = (by[k] ||= { type: c.type, thumb: c.thumb, rows: [], names: {} });
+    o.rows.push(r);
+    o.names[r.ad_name] = (o.names[r.ad_name] || 0) + (+r.spend || 0);
+    if (!o.thumb && c.thumb) o.thumb = c.thumb;
+  }
+  const items = Object.values(by).map(o => ({ ...o, ...sum(o.rows), name: Object.entries(o.names).sort((a, b) => b[1] - a[1])[0][0], ads: Object.keys(o.names).length })).filter(x => x.spend > 0);
+  const types = ["이미지", "영상", "카탈로그"].filter(t => items.some(x => x.type === t));
+  if (!types.length) return `<div class="empty">선택한 기간에 소재 데이터가 없습니다</div>`;
+  const cur = types.includes(CRTYPE[id]) ? CRTYPE[id] : types[0];
+  const pool = items.filter(x => x.type === cur);
+  const byRoas = pool.filter(x => x.spend >= MIN_SPEND).sort((a, b) => b.roas - a.roas).slice(0, 5);
+  const byRev = [...pool].sort((a, b) => b.purchase_value - a.purchase_value).slice(0, 5);
+  const card = (x, i, mainLabel, mainVal) => `
+    <div class="cr">
+      <div class="rank${i === 0 ? " r1" : ""}">${i + 1}</div>
+      ${x.thumb ? `<a href="${esc(x.thumb)}" target="_blank" rel="noopener"><img class="thumb" src="${esc(x.thumb)}" loading="lazy" alt=""></a>` : `<div class="nothumb">이미지 없음</div>`}
+      <div class="body">
+        <div class="name" title="${esc(x.name)}">${esc(x.name)}</div>
+        <div class="main">${mainLabel} ${mainVal}</div>
+        <div class="meta">지출 ${fmtW(x.spend)} · 구매 ${fmtN(x.purchases)}<br>${mainLabel === "ROAS" ? "매출 " + fmtW(x.purchase_value) : "ROAS " + fmtR(x.roas)} · CTR ${fmtP(x.ctr)}${x.type === "영상" ? `<br>3초 재생률 ${fmtP(x.hook)}` : ""}${x.ads > 1 ? `<br>광고 ${x.ads}개 합산` : ""}</div>
+      </div>
+    </div>`;
+  const grid = (list, label, f, key) => list.length ? `<div class="cr-grid">${list.map((x, i) => card(x, i, label, f(x[key]))).join("")}</div>` : `<div class="empty">조건에 맞는 소재가 없습니다</div>`;
+  return `
+    <div class="cr-head">
+      <div class="seg">${types.map(t => `<button data-cr="${id}" data-type="${t}" class="${t === cur ? "on" : ""}">${t} ${items.filter(x => x.type === t).length}</button>`).join("")}</div>
+      <label class="note">ROAS 순위 최소 지출
+        <select class="minspend">${[0, 50000, 100000, 300000, 500000].map(v => `<option value="${v}"${v === MIN_SPEND ? " selected" : ""}>${v ? fmtW(v) : "제한 없음"}</option>`).join("")}</select>
+      </label>
+    </div>
+    <div class="cr-list">
+      <h3>ROAS TOP 5</h3>${grid(byRoas, "ROAS", fmtR, "roas")}
+      <h3>전환매출 TOP 5</h3>${grid(byRev, "매출", fmtW, "purchase_value")}
+    </div>`;
+}
+
+/* ---------- 렌더 ---------- */
+const SECTIONS = [["summary", "요약"], ["event", "행사명별"], ["seg", "일반·키즈별"], ["audience", "타겟·노출"], ["creative", "소재 성과"], ["campaign", "캠페인별"], ["adset", "광고세트별"]];
+let SECTION = "summary";
+const GROUP = {};
+const ADSET_CAMP = {};
+
+/* ---------- 연령·성별·플랫폼·노출위치·기기 ---------- */
+const BD = {}; // 파일별 캐시 (열 때 한 번만 불러옴)
+let AUD = "age", audChart = null;
+const PLATFORM = { facebook: "페이스북", instagram: "인스타그램", audience_network: "Audience Network", messenger: "메신저", threads: "스레드" };
+const POSITION = {
+  feed: "피드", story: "스토리", facebook_stories: "스토리", instagram_stories: "스토리", reels: "릴스", facebook_reels: "릴스", instagram_reels: "릴스",
+  facebook_reels_overlay: "릴스 오버레이", instagram_explore: "탐색 탭", instagram_explore_grid_home: "탐색 홈", explore_home: "탐색 홈", video_feeds: "동영상 피드",
+  marketplace: "마켓플레이스", search: "검색 결과", instream_video: "인스트림 동영상", right_hand_column: "오른쪽 칼럼", profile_feed: "프로필 피드",
+  instagram_profile_feed: "프로필 피드", an_classic: "네이티브·배너", rewarded_video: "보상형 동영상", notification: "알림", messenger_inbox: "받은편지함", threads_feed: "피드",
+};
+const AUD_DIMS = {
+  age: { label: "연령", file: "age", key: r => r.dim === "Unknown" ? "알 수 없음" : r.dim, order: ["13-17", "18-24", "25-34", "35-44", "45-54", "55-64", "65+", "알 수 없음"] },
+  gender: { label: "성별", file: "gender", key: r => ({ female: "여성", male: "남성", unknown: "알 수 없음" }[r.dim] || r.dim) },
+  platform: { label: "플랫폼", file: "placement", key: r => { const p = r.dim.split("|")[0]; return PLATFORM[p] || p; } },
+  placement: { label: "노출위치", file: "placement", key: r => { const [p, pos] = r.dim.split("|"); return `${PLATFORM[p] || p} · ${POSITION[pos] || pos}`; } },
+  device: { label: "기기", file: "device", key: r => ({ mobile: "모바일", desktop: "데스크톱" }[r.dim] || r.dim) },
+};
+function loadBd(file) {
+  if (BD[file]) return BD[file];
+  BD[file] = getJson(`data/bd_${file}.json`).then(d => (BD[file] = d ? unpack(d) : [])).then(() => render());
+  return BD[file];
+}
+
+function audienceSection(acc, g, since, until, pSince, pUntil, scopeName) {
+  const dim = AUD_DIMS[AUD];
+  const data = BD[dim.file];
+  const subBtns = `<div class="seg">${Object.entries(AUD_DIMS).map(([k, d]) => `<button data-aud="${k}" class="${k === AUD ? "on" : ""}">${d.label}</button>`).join("")}</div>`;
+  if (!Array.isArray(data)) { loadBd(dim.file); return `<div class="card"><div class="cr-head">${subBtns}</div><div class="empty">불러오는 중…</div></div>`; }
+  if (!data.length) return `<div class="card"><div class="cr-head">${subBtns}</div><div class="empty">아직 수집된 데이터가 없습니다. Actions 에서 수집을 다시 실행하세요.</div></div>`;
+  const cur = data.filter(r => between(r, since, until) && inScope(r, ACCOUNT, g));
+  const prev = data.filter(r => between(r, pSince, pUntil) && inScope(r, ACCOUNT, g));
+  const noConv = [...new Set(cur.filter(r => !+r.ok && +r.spend > 0).map(r => ACC[r.account_id]?.name))];
+  const warn = noConv.length ? `<div class="warn">${noConv.map(esc).join(", ")}은(는) 메타가 이 기준의 공유 항목 전환을 제공하지 않아 <b>구매·매출·ROAS에서 제외</b>되어 있어요. 지출·노출·클릭은 정상 집계됩니다.${ACCOUNT === "all" ? " 전체 탭의 ROAS·CPA는 이 계정 지출이 함께 잡혀 실제보다 불리하게 보일 수 있으니, 정확한 비교는 계정 탭에서 확인하세요." : ""}</div>` : "";
+  if (dim.order) SORT["aud_" + AUD] ||= { key: "_order", dir: 1 };
+  const keyFn = dim.key;
+  const table = breakdownTable("aud_" + AUD, cur, prev, keyFn, { label: dim.label, bar: true, total: true, order: dim.order });
+  // 차트 데이터
+  const agg = {};
+  for (const r of cur) (agg[keyFn(r)] ||= []).push(r);
+  let labels = Object.keys(agg).filter(k => sum(agg[k]).spend > 0);
+  labels = dim.order ? labels.sort((a, b) => dim.order.indexOf(a) - dim.order.indexOf(b)) : labels.sort((a, b) => sum(agg[b]).spend - sum(agg[a]).spend).slice(0, 12);
+  window.__aud = { labels, spend: labels.map(k => sum(agg[k]).spend), roas: labels.map(k => sum(agg[k]).roas * 100) };
+  return `<div class="card"><h2>${dim.label}별 성과 <small>${esc(scopeName)} · 비교 ${pSince} ~ ${pUntil}</small></h2>
+    <div class="cr-head" style="margin-bottom:14px">${subBtns}</div>${warn}
+    <div class="chart-box" style="height:${dim.order || labels.length <= 6 ? 240 : 300}px"><canvas id="audChart"></canvas></div>
+    <div class="table-wrap" style="margin-top:16px">${table}</div></div>`;
+}
+
+function drawAudChart() {
+  const el = document.getElementById("audChart");
+  if (!el || typeof Chart === "undefined" || !window.__aud) return;
+  const css = getComputedStyle(document.documentElement), col = v => css.getPropertyValue(v).trim();
+  if (audChart) audChart.destroy();
+  const { labels, spend, roas } = window.__aud;
+  audChart = new Chart(el, {
+    data: { labels, datasets: [
+      { type: "bar", label: "지출", data: spend, backgroundColor: col("--bar"), yAxisID: "y", borderRadius: 4, order: 2 },
+      { type: "line", label: "ROAS(%)", data: roas, borderColor: col("--lineclr"), backgroundColor: col("--lineclr"), yAxisID: "y1", order: 1, borderWidth: 2.5, pointRadius: 4, tension: 0.25 },
+    ] },
+    options: {
+      maintainAspectRatio: false, interaction: { mode: "index", intersect: false },
+      plugins: { legend: { labels: { color: col("--muted") } }, tooltip: { callbacks: { label: x => x.dataset.yAxisID === "y" ? `지출: ${fmtW(x.raw)}` : `ROAS: ${Math.round(x.raw)}%` } } },
+      scales: {
+        x: { ticks: { color: col("--muted") }, grid: { display: false } },
+        y: { position: "left", ticks: { color: col("--muted"), callback: v => (v / 10000).toLocaleString() + "만" }, grid: { color: col("--line") } },
+        y1: { position: "right", ticks: { color: col("--muted"), callback: v => v + "%" }, grid: { display: false } },
+      },
+    },
+  });
+} // 광고세트 화면에서 고른 캠페인 // 계정별로 고른 그룹 (쉬어/자사몰 등)
+
+function render() {
+  const { since, until, pSince, pUntil } = range();
+  const acc = ACCOUNT === "all" ? null : ACC[ACCOUNT];
+  const groups = acc && acc.groups ? acc.groups.map(g => g.name) : null;
+
+  // 섹션 버튼
+  const secBox = document.getElementById("sections");
+  secBox.innerHTML = SECTIONS.map(([k, l]) => `<button class="sec${k === SECTION ? " on" : ""}" data-sec="${k}">${l}</button>`).join("");
+  secBox.querySelectorAll(".sec").forEach(b => b.onclick = () => { SECTION = b.dataset.sec; render(); });
+
+  // 그룹 버튼 (요약 화면에서는 두 그룹을 나란히 보여주므로 숨김)
+  const gBox = document.getElementById("groupbar");
+  const g = groups && SECTION !== "summary" ? (GROUP[ACCOUNT] ?? null) : null;
+  gBox.innerHTML = groups && SECTION !== "summary"
+    ? `<div class="grp">${[null, ...groups].map(x => `<button data-g="${x ?? ""}" class="${(x ?? null) === g ? "on" : ""}">${x ?? "전체"}</button>`).join("")}</div>` : "";
+  gBox.querySelectorAll("button[data-g]").forEach(b => b.onclick = () => { GROUP[ACCOUNT] = b.dataset.g || null; render(); });
+
+  const cur = DATA.rows.filter(r => between(r, since, until) && inScope(r, ACCOUNT, g));
+  const prev = DATA.rows.filter(r => between(r, pSince, pUntil) && inScope(r, ACCOUNT, g));
+  const accOf = r => ACC[r.account_id];
+  const evKey = r => parseName(r.campaign_name, accOf(r)).event;
+  const segKey = r => parseName(r.campaign_name, accOf(r)).seg;
+  const cmp = `<small>비교: ${pSince} ~ ${pUntil}</small>`;
+  const scopeName = (acc ? acc.name : "전체 계정") + (g ? ` · ${g}` : "");
+  let html = "";
+
+  if (SECTION === "summary") {
+    html += `<div class="kpis">${kpiHtml(sum(cur), sum(prev))}</div>`;
+    html += `<div class="card"><h2>일별 추이 <small>지출 vs 구매전환값</small></h2><div class="chart-box"><canvas id="trend"></canvas></div></div>`;
+    if (!acc) {
+      html += `<div class="card"><h2>계정별 성과 ${cmp}</h2><div class="table-wrap">${breakdownTable("acc", cur, prev, r => ACC[r.account_id]?.name || r.account_id, { label: "계정", total: true, bar: true })}</div></div>`;
+    } else if (groups) {
+      const total = sum(cur).spend;
+      html += `<div class="duo">${groups.map(gn => {
+        const c = cur.filter(r => inScope(r, ACCOUNT, gn)), p = prev.filter(r => inScope(r, ACCOUNT, gn)), s = sum(c);
+        return `<div class="card"><div class="gtitle"><span class="dot"></span>${esc(gn)}<span class="share">지출 비중 ${fmtS(total ? s.spend / total : 0)}</span></div><div class="kpis">${kpiHtml(s, sum(p))}</div></div>`;
+      }).join("")}</div>`;
+    }
+  } else if (SECTION === "event") {
+    html += `<div class="card"><h2>행사명별 성과 <small>${esc(scopeName)} · 비교 ${pSince} ~ ${pUntil}</small></h2><div class="table-wrap">${breakdownTable("ev_" + ACCOUNT + g, cur, prev, evKey, { label: "행사명", bar: true, total: true })}</div></div>`;
+  } else if (SECTION === "seg") {
+    html += `<div class="card"><h2>일반 / 키즈별 성과 <small>${esc(scopeName)} · 비교 ${pSince} ~ ${pUntil}</small></h2><div class="table-wrap">${breakdownTable("seg_" + ACCOUNT + g, cur, prev, segKey, { label: "구분", bar: true, total: true })}</div></div>`;
+    html += `<div class="card"><h2>행사명 × 일반/키즈 <small>행사별로 일반·키즈 성과를 함께 비교</small></h2><div class="table-wrap">${breakdownTable("evseg_" + ACCOUNT + g, cur, prev, r => evKey(r) + " · " + segKey(r), { label: "행사 · 구분", bar: true })}</div></div>`;
+  } else if (SECTION === "audience") {
+    html += audienceSection(acc, g, since, until, pSince, pUntil, scopeName);
+  } else if (SECTION === "creative") {
+    html += `<div class="card"><h2>소재 성과 <small>${esc(scopeName)} · 이미지·영상별 TOP 5</small></h2>${creativeBlock("cr_" + ACCOUNT + g, ACCOUNT, g, since, until)}</div>`;
+  } else if (SECTION === "adset") {
+    const camps = {};
+    for (const r of cur) if (+r.spend > 0) camps[r.campaign_id] = (camps[r.campaign_id] || 0) + (+r.spend);
+    const campList = Object.keys(camps).sort((a, b) => camps[b] - camps[a]);
+    const nameOf = id => (cur.find(r => r.campaign_id === id) || {}).campaign_name || id;
+    const selCamp = campList.includes(ADSET_CAMP[ACCOUNT]) ? ADSET_CAMP[ACCOUNT] : "";
+    const c2 = selCamp ? cur.filter(r => r.campaign_id === selCamp) : cur;
+    const p2 = selCamp ? prev.filter(r => r.campaign_id === selCamp) : prev;
+    html += `<div class="card"><h2>광고세트별 성과 <small>${esc(scopeName)} · 열 제목을 누르면 정렬</small></h2>
+      <div class="cr-head" style="margin-bottom:12px"><label class="note">캠페인
+        <select id="adsetCamp" style="max-width:min(560px, 80vw)"><option value="">전체 캠페인 (${campList.length}개)</option>${campList.map(id => `<option value="${esc(id)}"${id === selCamp ? " selected" : ""}>${esc(nameOf(id))}</option>`).join("")}</select>
+      </label></div>
+      <div class="table-wrap">${breakdownTable("adset_" + ACCOUNT + g, c2, p2, r => r.adset_id, {
+        label: "광고세트", total: true, bar: true,
+        labelFn: r => r.adset_name || r.adset_id,
+        subFn: r => { const p = parseName(r.campaign_name, accOf(r)); return `<div class="note">${acc ? "" : esc(accOf(r)?.name) + " · "}${esc(r.campaign_name)}<br>${esc(p.event)} · ${p.seg}</div>`; },
+      })}</div></div>`;
+  } else if (SECTION === "campaign") {
+    html += `<div class="card"><h2>캠페인별 성과 <small>${esc(scopeName)} · 열 제목을 누르면 정렬</small></h2><div class="table-wrap">${breakdownTable("camp_" + ACCOUNT + g, cur, prev, r => r.campaign_name, {
+      label: "캠페인", total: true,
+      subFn: r => { const p = parseName(r.campaign_name, accOf(r)); return `<div class="note">${acc ? "" : esc(accOf(r)?.name) + (r.account_type === "collab" ? '<span class="badge">협력</span>' : "") + " · "}${esc(p.event)} · ${p.seg}</div>`; },
+    })}</div></div>`;
+  }
+
+  const box = document.getElementById("content");
+  box.innerHTML = html;
+  if (SECTION === "summary") drawTrend(cur, since, until);
+  if (SECTION === "audience") drawAudChart();
+
+  box.querySelectorAll("th[data-t]").forEach(th => th.onclick = () => {
+    const t = th.dataset.t, k = th.dataset.k, s = SORT[t] || { key: "spend", dir: -1 };
+    SORT[t] = { key: k, dir: s.key === k ? -s.dir : -1 }; render();
+  });
+  box.querySelectorAll("button[data-cr]").forEach(b => b.onclick = () => { CRTYPE[b.dataset.cr] = b.dataset.type; render(); });
+  box.querySelectorAll("button[data-aud]").forEach(b => b.onclick = () => { AUD = b.dataset.aud; render(); });
+  const ac = document.getElementById("adsetCamp");
+  if (ac) ac.onchange = () => { ADSET_CAMP[ACCOUNT] = ac.value; render(); };
+  box.querySelectorAll(".minspend").forEach(s => s.onchange = () => { MIN_SPEND = +s.value; render(); });
+}
+
+function drawTrend(cur, since, until) {
+  if (typeof Chart === "undefined") return; // 차트 라이브러리를 못 불러와도 나머지 화면은 그린다
   const dates = []; for (let d = since; d <= until; d = addDays(d, 1)) dates.push(d);
   const byDate = {}; for (const r of cur) (byDate[r.date] ||= []).push(r);
   const sp = dates.map(d => sum(byDate[d] || []).spend), rv = dates.map(d => sum(byDate[d] || []).purchase_value);
-  const css = getComputedStyle(document.documentElement);
-  const col = v => css.getPropertyValue(v).trim();
+  const css = getComputedStyle(document.documentElement), col = v => css.getPropertyValue(v).trim();
   if (chart) chart.destroy();
   chart = new Chart(document.getElementById("trend"), {
     data: {
       labels: dates.map(d => d.slice(5)),
       datasets: [
-        { type: "bar", label: "지출", data: sp, backgroundColor: col("--s1"), yAxisID: "y", borderRadius: 3 },
-        { type: "line", label: "구매전환값", data: rv, borderColor: col("--s2"), backgroundColor: col("--s2"), yAxisID: "y1", tension: 0.3, pointRadius: 2 },
+        { type: "bar", label: "지출", data: sp, backgroundColor: col("--bar"), yAxisID: "y", borderRadius: 3, order: 2 },
+        { type: "line", label: "구매전환값", data: rv, borderColor: col("--lineclr"), backgroundColor: col("--lineclr"), yAxisID: "y1", order: 1, borderWidth: 2.5, tension: 0.3, pointRadius: dates.length > 60 ? 0 : 2 },
       ],
     },
     options: {
       maintainAspectRatio: false, interaction: { mode: "index", intersect: false },
       plugins: { legend: { labels: { color: col("--muted") } }, tooltip: { callbacks: { label: x => `${x.dataset.label}: ${fmtW(x.raw)}` } } },
       scales: {
-        x: { ticks: { color: col("--muted") }, grid: { display: false } },
+        x: { ticks: { color: col("--muted"), maxTicksLimit: 16 }, grid: { display: false } },
         y: { position: "left", ticks: { color: col("--muted"), callback: v => (v / 10000).toLocaleString() + "만" }, grid: { color: col("--line") } },
         y1: { position: "right", ticks: { color: col("--muted"), callback: v => (v / 10000).toLocaleString() + "만" }, grid: { display: false } },
       },
     },
   });
-
-  // 계정 테이블
-  const accHead = `<tr><th>계정</th><th>지출</th><th>노출</th><th>링크클릭</th><th>CTR</th><th>CPC</th><th>장바구니</th><th>구매</th><th>구매전환값</th><th>ROAS</th><th>ROAS 증감</th></tr>`;
-  const accRows = DATA.accounts.filter(a => ACCOUNT === "all" || a.id === ACCOUNT).map(a => {
-    const s = sum(cur.filter(r => r.account_id === a.id)), ps = sum(prev.filter(r => r.account_id === a.id));
-    return `<tr><td>${a.name}${a.type === "collab" ? '<span class="badge">협력</span>' : ""}</td>
-      <td>${fmtW(s.spend)}</td><td>${fmtN(s.impressions)}</td><td>${fmtN(s.link_clicks)}</td><td>${fmtP(s.ctr)}</td><td>${fmtW(s.cpc)}</td>
-      <td>${fmtN(s.add_to_cart)}</td><td>${fmtN(s.purchases)}</td><td>${fmtW(s.purchase_value)}</td><td>${fmtR(s.roas)}</td><td>${delta(s.roas, ps.roas)}</td></tr>`;
-  }).join("");
-  const tot = `<tr class="total"><td>합계</td><td>${fmtW(c.spend)}</td><td>${fmtN(c.impressions)}</td><td>${fmtN(c.link_clicks)}</td><td>${fmtP(c.ctr)}</td><td>${fmtW(c.cpc)}</td><td>${fmtN(c.add_to_cart)}</td><td>${fmtN(c.purchases)}</td><td>${fmtW(c.purchase_value)}</td><td>${fmtR(c.roas)}</td><td>${delta(c.roas, p.roas)}</td></tr>`;
-  document.getElementById("accTable").innerHTML = accHead + accRows + tot;
-
-  // 캠페인 테이블
-  const camps = {};
-  for (const r of cur) (camps[r.campaign_id] ||= { name: r.campaign_name, acc: r.account_name, type: r.account_type, rows: [] }).rows.push(r);
-  let list = Object.values(camps).map(x => ({ ...x, ...sum(x.rows) })).filter(x => x.spend > 0);
-  list.sort((a, b) => campSort.dir * ((a[campSort.key] || 0) - (b[campSort.key] || 0)));
-  const cols = [["spend", "지출", fmtW], ["impressions", "노출", fmtN], ["link_clicks", "링크클릭", fmtN], ["ctr", "CTR", fmtP], ["cpc", "CPC", fmtW],
-    ["add_to_cart", "장바구니", fmtN], ["purchases", "구매", fmtN], ["cpa", "CPA", fmtW], ["purchase_value", "구매전환값", fmtW], ["roas", "ROAS", fmtR]];
-  const head = `<tr><th>캠페인</th>${cols.map(([k, l]) => `<th data-k="${k}">${l}${campSort.key === k ? (campSort.dir < 0 ? " ↓" : " ↑") : ""}</th>`).join("")}</tr>`;
-  const body = list.length ? list.map(x => `<tr><td>${x.name}<div class="note">${x.acc}${x.type === "collab" ? '<span class="badge">협력</span>' : ""}</div></td>${cols.map(([k, , f]) => `<td>${f(x[k])}</td>`).join("")}</tr>`).join("")
-    : `<tr><td colspan="11" class="empty">선택한 기간에 지출이 없습니다</td></tr>`;
-  const t = document.getElementById("campTable");
-  t.innerHTML = head + body;
-  t.querySelectorAll("th[data-k]").forEach(th => th.onclick = () => {
-    const k = th.dataset.k; campSort = { key: k, dir: campSort.key === k ? -campSort.dir : -1 }; render();
-  });
 }
 
 function downloadCsv() {
-  const since = document.getElementById("since").value, until = document.getElementById("until").value;
-  const rows = filterRows(since, until);
-  const cols = ["date", "account_name", "account_type", "campaign_name", "adset_name", "spend", "impressions", "reach", "clicks", "link_clicks", "view_content", "add_to_cart", "purchases", "purchase_value"];
-  const esc = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
-  const csv = "﻿" + [cols.join(","), ...rows.map(r => cols.map(c => esc(r[c])).join(","))].join("\n");
+  const { since, until } = range();
+  const g = SECTION !== "summary" ? (GROUP[ACCOUNT] ?? null) : null;
+  const rows = DATA.rows.filter(r => between(r, since, until) && inScope(r, ACCOUNT, g));
+  const cols = ["date", "account_name", "account_type", "campaign_name", "event", "segment", "group", "adset_name", "spend", "impressions", "reach", "clicks", "link_clicks", "view_content", "add_to_cart", "purchases", "purchase_value"];
+  const q = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  const lines = rows.map(r => {
+    const acc = ACC[r.account_id], p = parseName(r.campaign_name, acc);
+    const x = { ...r, event: p.event, segment: p.seg, group: groupOf(r.campaign_name, acc) || "" };
+    return cols.map(c => q(x[c])).join(",");
+  });
   const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+  a.href = URL.createObjectURL(new Blob(["﻿" + [cols.join(","), ...lines].join("\n")], { type: "text/csv" }));
   a.download = `homeandheal_meta_${since}_${until}.csv`;
   a.click();
 }
@@ -254,19 +501,28 @@ function applyPreset() {
   render();
 }
 
-fetch("data/daily.json?t=" + Date.now()).then(r => r.json()).then(d => {
-  DATA = d;
-  document.getElementById("updated").textContent = `마지막 갱신: ${d.updated_at} · 계정 ${d.accounts.length}개`;
-  const tabs = [{ id: "all", name: "전체" }, ...d.accounts];
-  const box = document.getElementById("tabs");
-  box.innerHTML = tabs.map(a => `<button class="tab${a.id === "all" ? " on" : ""}" data-id="${a.id}">${a.name}</button>`).join("");
-  box.querySelectorAll(".tab").forEach(b => b.onclick = () => {
-    ACCOUNT = b.dataset.id; box.querySelectorAll(".tab").forEach(x => x.classList.toggle("on", x === b)); render();
+const getJson = p => fetch(p + "?t=" + Date.now()).then(r => r.ok ? r.json() : null).catch(() => null);
+Promise.all([getJson("data/daily.json"), getJson("data/ads.json"), getJson("data/creatives.json")]).then(([d, ads, cre]) => {
+  if (!d) throw new Error("no data");
+  DATA = { ...d, rows: unpack(d) };
+  ADS = ads ? unpack(ads) : [];
+  CRE = cre || {};
+  // 계정 설정은 저장소의 accounts.json 을 우선 (파싱 규칙·그룹을 바꾸면 바로 반영)
+  return getJson("accounts.json").then(cfg => {
+    const accounts = (cfg && cfg.accounts) || d.accounts;
+    accounts.forEach(a => ACC[a.id] = a);
+    document.getElementById("updated").textContent = `마지막 갱신: ${d.updated_at} · 계정 ${accounts.length}개`;
+    const tabs = [{ id: "all", name: "전체" }, ...accounts];
+    const box = document.getElementById("tabs");
+    box.innerHTML = tabs.map(a => `<button class="tab${a.id === "all" ? " on" : ""}" data-id="${a.id}">${esc(a.name)}</button>`).join("");
+    box.querySelectorAll(".tab").forEach(b => b.onclick = () => {
+      ACCOUNT = b.dataset.id; box.querySelectorAll(".tab").forEach(x => x.classList.toggle("on", x === b)); render();
+    });
+    document.getElementById("preset").onchange = applyPreset;
+    ["since", "until"].forEach(id => document.getElementById(id).onchange = () => { document.getElementById("preset").value = "custom"; render(); });
+    document.getElementById("csv").onclick = downloadCsv;
+    applyPreset();
   });
-  document.getElementById("preset").onchange = applyPreset;
-  ["since", "until"].forEach(id => document.getElementById(id).onchange = () => { document.getElementById("preset").value = "custom"; render(); });
-  document.getElementById("csv").onclick = downloadCsv;
-  applyPreset();
 }).catch(() => {
   document.getElementById("updated").textContent = "data/daily.json 을 찾을 수 없습니다. Actions 에서 수집을 먼저 실행하세요.";
 });
