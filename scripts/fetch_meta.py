@@ -90,7 +90,18 @@ def api_get(url, params, retries=5):
     raise RuntimeError("재시도 횟수 초과")
 
 
-def fetch_account(acc, since, until):
+def month_chunks(since, until):
+    """긴 기간을 월 단위 구간으로 나눈다 (한 번에 너무 많이 요청하면 API 가 거절함)"""
+    s = date.fromisoformat(since)
+    end = date.fromisoformat(until)
+    while s <= end:
+        nxt_month = (s.replace(day=1) + timedelta(days=32)).replace(day=1)
+        e = min(end, nxt_month - timedelta(days=1))
+        yield s.isoformat(), e.isoformat()
+        s = e + timedelta(days=1)
+
+
+def fetch_range(acc, since, until):
     url = f"{BASE}/act_{acc['id']}/insights"
     params = {
         "access_token": TOKEN,
@@ -108,6 +119,15 @@ def fetch_account(acc, since, until):
         if not nxt:
             break
         url, params = nxt, {}  # next URL 에 파라미터가 모두 들어 있음
+    return rows
+
+
+def fetch_account(acc, since, until):
+    rows = []
+    for s, e in month_chunks(since, until):
+        part = fetch_range(acc, s, e)
+        print(f"  {s} ~ {e}: {len(part)}행")
+        rows.extend(part)
     return rows
 
 

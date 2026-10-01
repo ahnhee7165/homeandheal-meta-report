@@ -72,6 +72,7 @@
         <option value="lastweek">지난주 (월~일)</option>
         <option value="thismonth">이번 달</option>
         <option value="lastmonth">지난달</option>
+        <option value="thisyear">올해 (1/1~어제)</option>
         <option value="custom">직접 선택</option>
       </select>
       <input type="date" id="since"> <span>~</span> <input type="date" id="until">
@@ -133,6 +134,7 @@ function presetRange(p) {
     const first = t.slice(0, 8) + "01", lastEnd = addDays(first, -1);
     return [lastEnd.slice(0, 8) + "01", lastEnd];
   }
+  if (p === "thisyear") return [t.slice(0, 4) + "-01-01", y];
   return null;
 }
 
