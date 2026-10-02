@@ -22,6 +22,7 @@ import json
 import os
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
@@ -106,7 +107,9 @@ def api_get(url, params, retries=5):
             err = {"message": r.text[:200]}
         code = err.get("code")
         # 호출 한도 / 일시 오류는 기다렸다가 재시도
-        if code in (1, 2, 4, 17, 32, 613, 80000, 80004) or r.status_code >= 500:
+        # 파라미터/권한 오류(100, 190, 200 등)는 기다려도 안 풀리므로 바로 실패 처리
+        transient = code in (1, 2, 4, 17, 32, 341, 613, 80000, 80004)
+        if transient or (r.status_code >= 500 and code not in (100, 190, 200, 10)):
             wait = 30 * (attempt + 1)
             print(f"  일시 오류(code={code}), {wait}초 후 재시도: {err.get('message')}")
             time.sleep(wait)
@@ -269,17 +272,20 @@ def classify(creative):
 
 
 def fetch_ad_creatives(ad_ids):
-    """광고 ID 묶음의 소재 정보를 가져온다. 묶음 요청이 실패하면 하나씩 다시 시도"""
+    """광고별 소재 정보를 가져온다.
+    v26.0 부터 여러 ID 를 한 번에 묻는 ids 파라미터가 막혀서, 광고 하나씩 동시에 몇 개씩 요청한다"""
+    def one(ad_id):
+        try:
+            return ad_id, api_get(f"{BASE}/{ad_id}", {"access_token": TOKEN, "fields": CREATIVE_FIELDS}, retries=3)
+        except RuntimeError as e:
+            print(f"    소재 정보 조회 실패 ({ad_id}): {e}")
+            return ad_id, None
+
     out = {}
-    try:
-        res = api_get(f"{BASE}/", {"access_token": TOKEN, "ids": ",".join(ad_ids), "fields": CREATIVE_FIELDS})
-        out.update(res)
-    except RuntimeError:
-        for ad_id in ad_ids:
-            try:
-                out[ad_id] = api_get(f"{BASE}/{ad_id}", {"access_token": TOKEN, "fields": CREATIVE_FIELDS})
-            except RuntimeError as e:
-                print(f"    소재 정보 조회 실패 ({ad_id}): {e}")
+    with ThreadPoolExecutor(max_workers=6) as pool:
+        for ad_id, res in pool.map(one, ad_ids):
+            if res:
+                out[ad_id] = res
     return out
 
 
