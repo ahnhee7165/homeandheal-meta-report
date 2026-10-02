@@ -46,16 +46,21 @@ jobs:
         run: python scripts/fetch_meta.py
 
       # 수집이 일부 실패해도 그때까지 저장된 데이터는 커밋
+      # 실행 도중 main 에 다른 커밋이 올라와도 충돌 없이 그 위에 data/ 만 얹는다
       - name: 변경사항 커밋
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/ || true
-          if git diff --cached --quiet; then
-            echo "변경 없음"
-          else
-            git commit -m "data: $(TZ=Asia/Seoul date +'%Y-%m-%d %H:%M') 메타 데이터 갱신"
-            git pull --rebase --autostash || true
-            git push
-          fi
+          for i in 1 2 3; do
+            git fetch -q origin main
+            git reset -q --mixed origin/main
+            git add data/
+            if git diff --cached --quiet; then
+              echo "변경 없음"; exit 0
+            fi
+            git commit -q -m "data: $(TZ=Asia/Seoul date +'%Y-%m-%d %H:%M') 메타 데이터 갱신"
+            if git push -q origin HEAD:main; then echo "커밋 완료"; exit 0; fi
+            echo "push 실패, 재시도 ($i)"; sleep 5
+          done
+          exit 1
