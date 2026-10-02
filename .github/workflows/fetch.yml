@@ -2,8 +2,9 @@ name: 메타 데이터 수집
 
 on:
   schedule:
-    # 매일 한국시간 오전 7시 (UTC 22:00)
-    - cron: "0 22 * * *"
+    # 매일 한국시간 오전 6시 47분 (UTC 21:47)
+    # 정각(00분)은 깃허브 서버가 붐벼서 지연·누락이 잦아 분을 비켜둠
+    - cron: "47 21 * * *"
   workflow_dispatch:
     inputs:
       since:
@@ -16,9 +17,16 @@ on:
 permissions:
   contents: write
 
+# 수집이 겹쳐서 돌지 않도록 한 번에 하나씩만 실행
+concurrency:
+  group: meta-fetch
+  cancel-in-progress: false
+
 jobs:
   fetch:
     runs-on: ubuntu-latest
+    # 매일 자동 실행(최근 7일)은 몇 분이면 끝남. 6시간씩 붙잡혀 있지 않도록 상한을 둠
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
 
@@ -34,16 +42,20 @@ jobs:
           META_API_VERSION: ${{ vars.META_API_VERSION }}
           SINCE: ${{ github.event.inputs.since }}
           UNTIL: ${{ github.event.inputs.until }}
+          PYTHONUNBUFFERED: "1"
         run: python scripts/fetch_meta.py
 
+      # 수집이 일부 실패해도 그때까지 저장된 데이터는 커밋
       - name: 변경사항 커밋
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/
+          git add data/ || true
           if git diff --cached --quiet; then
             echo "변경 없음"
           else
-            git commit -m "data: $(TZ=Asia/Seoul date +'%Y-%m-%d') 메타 데이터 갱신"
+            git commit -m "data: $(TZ=Asia/Seoul date +'%Y-%m-%d %H:%M') 메타 데이터 갱신"
+            git pull --rebase --autostash || true
             git push
           fi
