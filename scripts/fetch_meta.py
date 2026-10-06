@@ -397,6 +397,79 @@ def collect_breakdowns(accounts, since, until):
         print(f"  {name}: {n}행 저장")
 
 
+# ---------------------------------------------------------------- 카탈로그 제품별
+
+PROD_COLS = ["date", "account_id", "campaign_id", "campaign_name", "product_id",
+             "spend", "impressions", "link_clicks", "add_to_cart", "purchases", "purchase_value", "ok"]
+PROD_NUM = {"spend", "impressions", "link_clicks", "add_to_cart", "purchases", "purchase_value", "ok"}
+
+
+def split_product(raw_pid):
+    """메타는 product_id 를 '제품ID, 제품명' 한 줄로 돌려준다"""
+    s = str(raw_pid or "")
+    pid, _, name = s.partition(", ")
+    return pid.strip(), (name.strip() or pid.strip())
+
+
+def collect_products(accounts, since, until):
+    """카탈로그(다이내믹) 광고의 제품별 성과를 일자 x 캠페인 x 제품 단위로 받는다.
+    제품명은 따로 모아 data/products.json 의 names 에 한 번만 저장한다"""
+    path = DATA_DIR / "products.json"
+    rows, names = {}, {}
+    if path.exists():
+        old = json.loads(path.read_text(encoding="utf-8"))
+        names = old.get("names", {})
+        for vals in old.get("rows", []):
+            r = dict(zip(old["columns"], vals))
+            rows[(r["date"], r["account_id"], r["campaign_id"], r["product_id"])] = r
+
+    in_range = lambda d: since <= d <= until
+    fields = ["campaign_id", "campaign_name"] + METRIC_FIELDS
+    for acc in accounts:
+        seg_ok = True
+        try:
+            raw = fetch_insights(acc, "campaign", fields, since, until, "product_id")
+        except RuntimeError as e:
+            if acc["type"] != "collab":
+                print(f"  [제품] {acc['name']} 실패: {e}")
+                continue
+            print(f"  [제품] {acc['name']}: 공유 항목 지표 미지원 → 노출·클릭 지표만 수집")
+            seg_ok = False
+            try:
+                raw = fetch_insights(acc, "campaign", [f for f in fields if not f.startswith("catalog_segment")],
+                                     since, until, "product_id")
+            except RuntimeError as e2:
+                print(f"  [제품] {acc['name']} 실패: {e2}")
+                continue
+        rows = {k: v for k, v in rows.items() if not (in_range(k[0]) and k[1] == acc["id"])}
+        for r in raw:
+            pid, pname = split_product(r.get("product_id"))
+            if not pid:
+                continue
+            names[f"{acc['id']}|{pid}"] = pname
+            m = metrics(r, acc)
+            ok = 1 if seg_ok or acc["type"] != "collab" else 0
+            row = {"date": r.get("date_start"), "account_id": acc["id"],
+                   "campaign_id": r.get("campaign_id", ""), "campaign_name": r.get("campaign_name", ""),
+                   "product_id": pid, "ok": ok,
+                   **{k: m[k] for k in ["spend", "impressions", "link_clicks", "add_to_cart", "purchases", "purchase_value"]}}
+            if not ok:
+                row.update(add_to_cart=0, purchases=0, purchase_value=0)
+            key = (row["date"], acc["id"], row["campaign_id"], pid)
+            if key in rows:  # 같은 제품이 같은 날 여러 번 오면 합산
+                for k in PROD_NUM - {"ok"}:
+                    rows[key][k] = num(rows[key][k]) + num(row[k])
+            else:
+                rows[key] = row
+
+    data = sorted(rows.values(), key=lambda r: (r["date"], r["account_id"], r["campaign_id"], r["product_id"]))
+    packed = [[(compact(r.get(c)) if c in PROD_NUM else r.get(c, "")) for c in PROD_COLS] for r in data]
+    used = {f"{r['account_id']}|{r['product_id']}" for r in data}
+    path.write_text(json.dumps({"columns": PROD_COLS, "names": {k: v for k, v in names.items() if k in used},
+                                "rows": packed}, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    print(f"  제품별: {len(data)}행, 제품 {len(used)}개 저장")
+
+
 # ---------------------------------------------------------------- 실행
 
 def main():
@@ -458,6 +531,12 @@ def main():
         collect_breakdowns(ok_accounts, since, until)
     except Exception as e:  # 부가 데이터라 실패해도 성과 데이터는 저장
         print(f"분석 축 수집 중 오류 (성과 데이터는 저장됨): {e}")
+
+    print("- 카탈로그 제품별 수집")
+    try:
+        collect_products(ok_accounts, since, until)
+    except Exception as e:  # 부가 데이터라 실패해도 성과 데이터는 저장
+        print(f"제품별 수집 중 오류 (성과 데이터는 저장됨): {e}")
 
     try:
         update_creatives(ad_ids)

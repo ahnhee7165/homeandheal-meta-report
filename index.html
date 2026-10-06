@@ -240,11 +240,14 @@ function breakdownTable(id, cur, prev, keyFn, opts = {}) {
   const st = SORT[id] || { key: "spend", dir: -1 };
   if (st.key === "_order" && opts.order) list.sort((a, b) => opts.order.indexOf(a.key) - opts.order.indexOf(b.key));
   else list.sort((a, b) => st.dir * ((a[st.key] || 0) - (b[st.key] || 0)));
+  const more = opts.limit && list.length > opts.limit ? list.length - opts.limit : 0;
+  if (more) list = list.slice(0, opts.limit);
   const head = `<tr><th>${opts.label}</th>${BREAK_COLS.map(([k, l]) => `<th data-t="${id}" data-k="${k}">${l}${st.key === k ? (st.dir < 0 ? " ↓" : " ↑") : ""}</th>`).join("")}<th>ROAS 증감</th></tr>`;
   if (!list.length) return `<table>${head}<tr><td colspan="11" class="empty">선택한 기간에 지출이 없습니다</td></tr></table>`;
   const body = list.map(x => `<tr><td>${esc(x.label)}${x.sub}${opts.bar ? `<div class="bar" style="width:${Math.max(2, x.share * 100)}%"></div>` : ""}</td>${BREAK_COLS.map(([k, , f]) => `<td>${f(x[k])}</td>`).join("")}<td>${delta(x.roas, x.proas)}</td></tr>`).join("");
   const tot = opts.total ? `<tr class="total"><td>합계</td>${BREAK_COLS.map(([k, , f]) => `<td>${k === "share" ? "100%" : f(total[k])}</td>`).join("")}<td>${delta(total.roas, ptotal.roas)}</td></tr>` : "";
-  return `<table>${head}${body}${tot}</table>`;
+  const moreRow = more ? `<tr><td colspan="11" class="note" style="text-align:center">그 외 ${more}개는 생략 · 정렬을 바꾸거나 검색해서 확인하세요</td></tr>` : "";
+  return `<table>${head}${body}${moreRow}${tot}</table>`;
 }
 
 // 소재 성과 (이미지/영상/카탈로그 x ROAS TOP5 / 전환매출 TOP5)
@@ -291,7 +294,7 @@ function creativeBlock(id, accId, group, since, until) {
 }
 
 /* ---------- 렌더 ---------- */
-const SECTIONS = [["summary", "요약"], ["event", "행사명별"], ["seg", "일반·키즈별"], ["audience", "타겟·노출"], ["creative", "소재 성과"], ["campaign", "캠페인별"], ["adset", "광고세트별"]];
+const SECTIONS = [["summary", "요약"], ["event", "행사명별"], ["seg", "일반·키즈별"], ["audience", "타겟·노출"], ["creative", "소재 성과"], ["products", "제품별"], ["campaign", "캠페인별"], ["adset", "광고세트별"]];
 let SECTION = "summary";
 const GROUP = {};
 const ADSET_CAMP = {};
@@ -327,6 +330,74 @@ function loadBd(file) {
   if (BD[file]) return BD[file];
   BD[file] = getJson(`data/bd_${file}.json`).then(d => (BD[file] = d ? unpack(d) : [])).then(() => render());
   return BD[file];
+}
+
+/* ---------- 카탈로그 제품별 ---------- */
+let PROD = null, PSEARCH = "", PLIMIT = 50, prodChart = null;
+function loadProducts() {
+  if (PROD) return;
+  PROD = "loading";
+  getJson("data/products.json").then(d => {
+    PROD = d ? { names: d.names || {}, rows: unpack(d) } : { names: {}, rows: [] };
+    for (const r of PROD.rows) r.pkey = r.account_id + "|" + r.product_id;
+    render();
+  });
+}
+const pname = k => (PROD && PROD.names[k]) || k.split("|")[1];
+
+function productSection(acc, g, since, until, pSince, pUntil, scopeName) {
+  if (!PROD || PROD === "loading") { loadProducts(); return `<div class="card"><div class="empty">불러오는 중…</div></div>`; }
+  if (!PROD.rows.length) return `<div class="card"><h2>카탈로그 제품별 성과</h2><div class="empty">아직 수집된 제품 데이터가 없습니다. Actions 에서 기간을 지정해 수집을 한 번 실행하세요.</div></div>`;
+  const q = PSEARCH.trim().toLowerCase();
+  const hit = r => !q || pname(r.pkey).toLowerCase().includes(q) || String(r.product_id).toLowerCase().includes(q);
+  const cur = PROD.rows.filter(r => between(r, since, until) && inScope(r, ACCOUNT, g) && hit(r));
+  const prev = PROD.rows.filter(r => between(r, pSince, pUntil) && inScope(r, ACCOUNT, g) && hit(r));
+  const noConv = [...new Set(cur.filter(r => !+r.ok && +r.spend > 0).map(r => ACC[r.account_id]?.name))];
+  const warn = noConv.length ? `<div class="warn">${noConv.map(esc).join(", ")}은(는) 제품 단위 공유 항목 전환을 메타가 제공하지 않아 <b>구매·매출·ROAS가 0으로</b> 표시돼요. 지출·노출·클릭은 정상입니다.</div>` : "";
+  const s = sum(cur), ps = sum(prev);
+  const nProd = new Set(cur.filter(r => +r.spend > 0).map(r => r.pkey)).size;
+  // 차트: 지출 상위 15개 제품
+  const agg = {};
+  for (const r of cur) (agg[r.pkey] ||= []).push(r);
+  const top = Object.keys(agg).map(k => [k, sum(agg[k])]).filter(x => x[1].spend > 0).sort((a, b) => b[1].spend - a[1].spend).slice(0, 15);
+  window.__prod = { labels: top.map(([k]) => pname(k)), spend: top.map(x => x[1].spend), roas: top.map(x => x[1].roas * 100) };
+  const table = breakdownTable("prod_" + ACCOUNT + g, cur, prev, r => r.pkey, {
+    label: "제품", total: true, bar: true, limit: PLIMIT,
+    labelFn: r => pname(r.pkey),
+    subFn: r => `<div class="note">${acc ? "" : esc(ACC[r.account_id]?.name || r.account_id) + (ACC[r.account_id]?.type === "collab" ? '<span class="badge">협력</span>' : "") + " · "}ID ${esc(r.product_id)}</div>`,
+  });
+  return `<div class="kpis">${kpiHtml(s, ps)}</div>
+    <div class="card"><h2>카탈로그 제품별 성과 <small>${esc(scopeName)} · 노출된 제품 ${fmtN(nProd)}개 · 비교 ${pSince} ~ ${pUntil}</small></h2>
+    <div class="cr-head" style="margin-bottom:12px">
+      <input id="psearch" type="search" placeholder="제품명·ID 검색" value="${esc(PSEARCH)}" style="font:inherit;font-size:13px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;min-width:220px">
+      <label class="note">표시 <select id="plimit">${[20, 50, 100, 0].map(v => `<option value="${v}"${v === PLIMIT ? " selected" : ""}>${v ? "상위 " + v + "개" : "전체"}</option>`).join("")}</select></label>
+    </div>${warn}
+    ${top.length ? `<div class="chart-box" style="height:300px"><canvas id="prodChart"></canvas></div>` : ""}
+    <div class="table-wrap" style="margin-top:16px">${table}</div></div>`;
+}
+
+function drawProdChart() {
+  const el = document.getElementById("prodChart");
+  if (!el || typeof Chart === "undefined" || !window.__prod) return;
+  const css = getComputedStyle(document.documentElement), col = v => css.getPropertyValue(v).trim();
+  if (prodChart) prodChart.destroy();
+  const { labels, spend, roas } = window.__prod;
+  const cut = t => t.length > 14 ? t.slice(0, 14) + "…" : t;
+  prodChart = new Chart(el, {
+    data: { labels, datasets: [
+      { type: "bar", label: "지출", data: spend, backgroundColor: col("--bar"), yAxisID: "y", borderRadius: 4, order: 2 },
+      { type: "line", label: "ROAS(%)", data: roas, borderColor: col("--lineclr"), backgroundColor: col("--lineclr"), yAxisID: "y1", order: 1, borderWidth: 0, showLine: false, pointRadius: 5 },
+    ] },
+    options: {
+      maintainAspectRatio: false, interaction: { mode: "index", intersect: false },
+      plugins: { legend: { labels: { color: col("--muted") } }, tooltip: { callbacks: { title: x => labels[x[0].dataIndex], label: x => x.dataset.yAxisID === "y" ? `지출: ${fmtW(x.raw)}` : `ROAS: ${Math.round(x.raw)}%` } } },
+      scales: {
+        x: { ticks: { color: col("--muted"), callback: function (v) { return cut(this.getLabelForValue(v)); }, maxRotation: 45, autoSkip: false, font: { size: 11 } }, grid: { display: false } },
+        y: { position: "left", ticks: { color: col("--muted"), callback: v => (v / 10000).toLocaleString() + "만" }, grid: { color: col("--line") } },
+        y1: { position: "right", ticks: { color: col("--muted"), callback: v => v + "%" }, grid: { display: false } },
+      },
+    },
+  });
 }
 
 function audienceSection(acc, g, since, until, pSince, pUntil, scopeName) {
@@ -427,6 +498,8 @@ function render() {
     html += audienceSection(acc, g, since, until, pSince, pUntil, scopeName);
   } else if (SECTION === "creative") {
     html += `<div class="card"><h2>소재 성과 <small>${esc(scopeName)} · 이미지·영상별 TOP 5</small></h2>${creativeBlock("cr_" + ACCOUNT + g, ACCOUNT, g, since, until)}</div>`;
+  } else if (SECTION === "products") {
+    html += productSection(acc, g, since, until, pSince, pUntil, scopeName);
   } else if (SECTION === "adset") {
     const camps = {};
     for (const r of cur) if (+r.spend > 0) camps[r.campaign_id] = (camps[r.campaign_id] || 0) + (+r.spend);
@@ -455,6 +528,14 @@ function render() {
   box.innerHTML = html;
   if (SECTION === "summary") { drawTrend(cur, since, until); drawTraffic(cur, since, until); }
   if (SECTION === "audience") drawAudChart();
+  if (SECTION === "products") drawProdChart();
+  const ps = document.getElementById("psearch");
+  if (ps) {
+    let t;
+    ps.oninput = () => { clearTimeout(t); t = setTimeout(() => { PSEARCH = ps.value; render(); const n = document.getElementById("psearch"); if (n) { n.focus(); n.setSelectionRange(n.value.length, n.value.length); } }, 250); };
+  }
+  const pl = document.getElementById("plimit");
+  if (pl) pl.onchange = () => { PLIMIT = +pl.value; render(); };
 
   box.querySelectorAll("th[data-t]").forEach(th => th.onclick = () => {
     const t = th.dataset.t, k = th.dataset.k, s = SORT[t] || { key: "spend", dir: -1 };
@@ -530,6 +611,17 @@ function drawTrend(cur, since, until) {
 function downloadCsv() {
   const { since, until } = range();
   const g = SECTION !== "summary" ? (GROUP[ACCOUNT] ?? null) : null;
+  if (SECTION === "products" && PROD && PROD.rows) {
+    const cols = ["date", "account_name", "campaign_name", "product_id", "product_name", "spend", "impressions", "link_clicks", "add_to_cart", "purchases", "purchase_value"];
+    const q = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const lines = PROD.rows.filter(r => between(r, since, until) && inScope(r, ACCOUNT, g))
+      .map(r => cols.map(c => q({ ...r, account_name: ACC[r.account_id]?.name || r.account_id, product_name: pname(r.pkey) }[c])).join(","));
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob(["\ufeff" + [cols.join(","), ...lines].join("\n")], { type: "text/csv" }));
+    a.download = `homeandheal_meta_products_${since}_${until}.csv`;
+    a.click();
+    return;
+  }
   const rows = DATA.rows.filter(r => between(r, since, until) && inScope(r, ACCOUNT, g));
   const cols = ["date", "account_name", "account_type", "campaign_name", "event", "segment", "group", "adset_name", "spend", "impressions", "reach", "clicks", "link_clicks", "view_content", "add_to_cart", "purchases", "purchase_value"];
   const q = v => `"${String(v ?? "").replace(/"/g, '""')}"`;

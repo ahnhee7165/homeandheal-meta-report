@@ -16,6 +16,7 @@
 | `data/daily.csv`, `data/daily.json` | 광고세트 일별 성과 (첫 실행 후 자동 생성) |
 | `data/ads.json`, `data/creatives.json`, `data/creatives/` | 소재(광고) 일별 성과, 소재 유형, 썸네일 |
 | `data/bd_age.json` 외 3개 | 연령·성별·노출위치·기기별 캠페인 성과 |
+| `data/products.json` | 카탈로그 제품별 일별 성과 (일자 × 캠페인 × 제품, `product_id` 분석 축) |
 
 ## 세팅 순서
 
