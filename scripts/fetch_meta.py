@@ -519,6 +519,16 @@ def product_debug(acc, raw, since, until):
         info["account_level_value"] = round(sum(metrics(r, acc)["purchase_value"] for r in acc_rows))
     except Exception as e:  # 점검용이라 실패해도 무시
         info["account_level_error"] = str(e)[:300]
+    if acc["type"] == "collab":
+        # 협력광고는 광고(ad) 단위로 받으면 제품별 공유 항목 전환이 나오는지도 확인
+        try:
+            ad_rows = fetch_insights(acc, "ad", ["spend", "catalog_segment_actions", "catalog_segment_value"],
+                                     since, until, "product_id")
+            info["ad_level_rows"] = len(ad_rows)
+            info["ad_level_rows_with_segment"] = sum(1 for r in ad_rows if r.get("catalog_segment_actions"))
+            info["ad_level_purchases"] = sum(metrics(r, acc)["purchases"] for r in ad_rows)
+        except Exception as e:
+            info["ad_level_error"] = str(e)[:300]
     print(f"  [제품 점검] {acc['name']}: 캠페인 단위 구매 {info['campaign_level_purchases']}, "
           f"계정 단위 구매 {info.get('account_level_purchases')}")
     return info
