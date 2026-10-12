@@ -101,10 +101,11 @@ def pick(action_list, keys):
     if not action_list:
         return 0.0
     by_type = {a.get("action_type"): action_value(a) for a in action_list}
-    for k in keys:
-        if by_type.get(k) not in (None, ""):
-            return num(by_type[k])
-    return 0.0
+    # 같은 전환이 여러 이름으로 함께 오는데, 제품(product_id) 분석 축에서는
+    # omni_purchase 가 "0" 이고 onsite_web_* 쪽에만 실제 값이 들어오는 경우가 있다.
+    # 이름 순서로 첫 값을 고르면 0 을 집게 되므로, 후보 중 가장 큰 값을 쓴다
+    vals = [num(by_type[k]) for k in keys if by_type.get(k) not in (None, "")]
+    return max(vals) if vals else 0.0
 
 
 def compact(v):
