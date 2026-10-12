@@ -50,8 +50,11 @@ ADSET_FIELDS = ["campaign_id", "campaign_name", "adset_id", "adset_name"] + METR
 AD_FIELDS = ["campaign_id", "campaign_name", "adset_id", "ad_id", "ad_name"] + METRIC_FIELDS
 
 # 우선순위대로 찾는다 (첫 번째로 존재하는 값 사용)
-PURCHASE_KEYS = ["omni_purchase", "purchase", "offsite_conversion.fb_pixel_purchase"]
-ATC_KEYS = ["omni_add_to_cart", "add_to_cart", "offsite_conversion.fb_pixel_add_to_cart"]
+# 제품(product_id) 분석 축에서는 구매가 onsite_web_* 이름으로만 오는 경우가 있어 뒤에 덧붙임
+PURCHASE_KEYS = ["omni_purchase", "purchase", "offsite_conversion.fb_pixel_purchase",
+                 "onsite_web_purchase", "onsite_web_app_purchase"]
+ATC_KEYS = ["omni_add_to_cart", "add_to_cart", "offsite_conversion.fb_pixel_add_to_cart",
+            "onsite_web_add_to_cart", "onsite_web_app_add_to_cart"]
 VIEW_KEYS = ["omni_view_content", "view_content", "offsite_conversion.fb_pixel_view_content"]
 VIDEO_VIEW_KEYS = ["video_view"]  # 3초 이상 재생
 
@@ -80,11 +83,24 @@ def num(v):
         return 0.0
 
 
+def action_value(a):
+    """전환 항목 하나의 값. 보통 value 에 들어 있지만,
+    분석 축에 따라 value 없이 기여 기간별(7d_click, 1d_view 등)로만 오는 경우가 있다"""
+    if a.get("value") not in (None, ""):
+        return a["value"]
+    if a.get("default") not in (None, ""):
+        return a["default"]
+    parts = [a.get(k) for k in ("7d_click", "1d_view") if a.get(k) not in (None, "")]
+    if parts:
+        return sum(num(x) for x in parts)
+    return None
+
+
 def pick(action_list, keys):
     """actions 형태의 리스트에서 keys 우선순위로 값을 찾는다"""
     if not action_list:
         return 0.0
-    by_type = {a.get("action_type"): a.get("value") for a in action_list}
+    by_type = {a.get("action_type"): action_value(a) for a in action_list}
     for k in keys:
         if by_type.get(k) not in (None, ""):
             return num(by_type[k])
@@ -446,6 +462,9 @@ def collect_products(accounts, since, until):
                 continue
         rows = {k: v for k, v in rows.items() if not (in_range(k[0]) and k[1] == acc["id"])}
         debug[acc["id"]] = product_debug(acc, raw, since, until)
+        if acc["type"] == "collab" and seg_ok and raw and not any(r.get("catalog_segment_actions") for r in raw):
+            print(f"  [제품] {acc['name']}: 제품 단위 공유 항목 전환이 제공되지 않음 → 구매·매출 미제공으로 표시")
+            seg_ok = False
         for r in raw:
             pid, pname = split_product(r.get("product_id"))
             if not pid:
@@ -486,7 +505,11 @@ def product_debug(acc, raw, since, until):
             for a in r.get(k) or []:
                 types[k][a.get("action_type")] += 1
     info = {"name": acc["name"], "type": acc["type"], "rows": len(raw),
-            "campaign_level": {k: dict(v.most_common(15)) for k, v in types.items()},
+            "campaign_level": {k: dict(v) for k, v in types.items()},
+            "samples": [{k: r.get(k) for k in ("date_start", "product_id", "actions", "action_values",
+                                               "catalog_segment_actions", "catalog_segment_value")}
+                        for r in raw if any("purchase" in (a.get("action_type") or "") or "add_to_cart" in (a.get("action_type") or "")
+                                            for k in ("actions", "catalog_segment_actions") for a in (r.get(k) or []))][:3],
             "campaign_level_purchases": sum(metrics(r, acc)["purchases"] for r in raw)}
     try:
         f = ["spend", "actions", "action_values"] + (["catalog_segment_actions", "catalog_segment_value"] if acc["type"] == "collab" else [])
