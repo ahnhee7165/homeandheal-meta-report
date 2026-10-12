@@ -425,10 +425,13 @@ def collect_products(accounts, since, until):
 
     in_range = lambda d: since <= d <= until
     fields = ["campaign_id", "campaign_name"] + METRIC_FIELDS
+    debug = {}
     for acc in accounts:
         seg_ok = True
+        # 자사몰 계정은 공유 항목 지표가 필요 없으므로 요청하지 않는다
+        acc_fields = fields if acc["type"] == "collab" else [f for f in fields if not f.startswith("catalog_segment")]
         try:
-            raw = fetch_insights(acc, "campaign", fields, since, until, "product_id")
+            raw = fetch_insights(acc, "campaign", acc_fields, since, until, "product_id")
         except RuntimeError as e:
             if acc["type"] != "collab":
                 print(f"  [제품] {acc['name']} 실패: {e}")
@@ -442,6 +445,7 @@ def collect_products(accounts, since, until):
                 print(f"  [제품] {acc['name']} 실패: {e2}")
                 continue
         rows = {k: v for k, v in rows.items() if not (in_range(k[0]) and k[1] == acc["id"])}
+        debug[acc["id"]] = product_debug(acc, raw, since, until)
         for r in raw:
             pid, pname = split_product(r.get("product_id"))
             if not pid:
@@ -467,7 +471,34 @@ def collect_products(accounts, since, until):
     used = {f"{r['account_id']}|{r['product_id']}" for r in data}
     path.write_text(json.dumps({"columns": PROD_COLS, "names": {k: v for k, v in names.items() if k in used},
                                 "rows": packed}, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    (DATA_DIR / "products_debug.json").write_text(json.dumps(
+        {"since": since, "until": until, "accounts": debug}, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"  제품별: {len(data)}행, 제품 {len(used)}개 저장")
+
+
+def product_debug(acc, raw, since, until):
+    """제품별 구매가 비어 보일 때 원인을 찾기 위한 점검 정보.
+    받은 행에 어떤 전환 항목이 들어 있었는지, 계정 단위로 받으면 구매가 잡히는지 비교한다"""
+    from collections import Counter
+    types = {k: Counter() for k in ("actions", "action_values", "catalog_segment_actions", "catalog_segment_value")}
+    for r in raw:
+        for k in types:
+            for a in r.get(k) or []:
+                types[k][a.get("action_type")] += 1
+    info = {"name": acc["name"], "type": acc["type"], "rows": len(raw),
+            "campaign_level": {k: dict(v.most_common(15)) for k, v in types.items()},
+            "campaign_level_purchases": sum(metrics(r, acc)["purchases"] for r in raw)}
+    try:
+        f = ["spend", "actions", "action_values"] + (["catalog_segment_actions", "catalog_segment_value"] if acc["type"] == "collab" else [])
+        acc_rows = fetch_insights(acc, "account", f, since, until, "product_id")
+        info["account_level_rows"] = len(acc_rows)
+        info["account_level_purchases"] = sum(metrics(r, acc)["purchases"] for r in acc_rows)
+        info["account_level_value"] = round(sum(metrics(r, acc)["purchase_value"] for r in acc_rows))
+    except Exception as e:  # 점검용이라 실패해도 무시
+        info["account_level_error"] = str(e)[:300]
+    print(f"  [제품 점검] {acc['name']}: 캠페인 단위 구매 {info['campaign_level_purchases']}, "
+          f"계정 단위 구매 {info.get('account_level_purchases')}")
+    return info
 
 
 # ---------------------------------------------------------------- 실행
