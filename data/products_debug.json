@@ -1,0 +1,168 @@
+{
+ "since": "2026-10-05",
+ "until": "2026-10-11",
+ "accounts": {
+  "456254580008371": {
+   "name": "홈앤힐 자사몰",
+   "type": "own",
+   "rows": 708,
+   "campaign_level": {
+    "actions": {
+     "post_engagement": 489,
+     "page_engagement": 489,
+     "link_click": 488,
+     "landing_page_view": 468,
+     "omni_landing_page_view": 468,
+     "offsite_content_view_add_20_s_calls": 465,
+     "onsite_web_view_content": 465,
+     "onsite_web_app_view_content": 465,
+     "view_content": 465,
+     "offsite_content_view_add_meta_leads": 465,
+     "omni_view_content": 465,
+     "offsite_conversion.fb_pixel_view_content": 465,
+     "add_to_cart": 123,
+     "offsite_conversion.fb_pixel_add_to_cart": 123,
+     "onsite_web_add_to_cart": 123
+    },
+    "action_values": {
+     "offsite_conversion.fb_pixel_view_content": 465,
+     "omni_view_content": 465,
+     "view_content": 465,
+     "onsite_web_view_content": 465,
+     "onsite_web_app_view_content": 465,
+     "onsite_web_app_add_to_cart": 123,
+     "onsite_web_add_to_cart": 123,
+     "offsite_conversion.fb_pixel_add_to_cart": 123,
+     "add_to_cart": 123,
+     "omni_add_to_cart": 123,
+     "omni_initiated_checkout": 25,
+     "onsite_web_initiate_checkout": 25,
+     "offsite_conversion.fb_pixel_initiate_checkout": 25,
+     "initiate_checkout": 25,
+     "onsite_web_app_purchase": 9
+    },
+    "catalog_segment_actions": {},
+    "catalog_segment_value": {}
+   },
+   "campaign_level_purchases": 0.0,
+   "account_level_rows": 708,
+   "account_level_purchases": 0.0,
+   "account_level_value": 0
+  },
+  "1321099275646928": {
+   "name": "네이버 브랜드스토어 협력광고",
+   "type": "collab",
+   "rows": 407,
+   "campaign_level": {
+    "actions": {
+     "link_click": 266,
+     "post_engagement": 266,
+     "page_engagement": 266,
+     "landing_page_view": 265,
+     "omni_landing_page_view": 265,
+     "initiate_checkout": 118,
+     "offsite_conversion.fb_pixel_initiate_checkout": 118,
+     "offsite_initiate_checkout_add_20_s_calls": 118,
+     "onsite_web_initiate_checkout": 118,
+     "omni_initiated_checkout": 118,
+     "video_view": 106,
+     "post_interaction_net": 85,
+     "post_interaction_gross": 83,
+     "onsite_conversion.post_net_like": 74,
+     "post_reaction": 72
+    },
+    "action_values": {
+     "offsite_conversion.fb_pixel_view_content": 4,
+     "omni_view_content": 4,
+     "view_content": 4,
+     "onsite_web_view_content": 4,
+     "onsite_web_app_view_content": 4
+    },
+    "catalog_segment_actions": {
+     "omni_view_content": 317,
+     "view_content": 317,
+     "offsite_conversion.fb_pixel_view_content": 317,
+     "add_to_cart": 152,
+     "omni_add_to_cart": 152,
+     "offsite_conversion.fb_pixel_add_to_cart": 143,
+     "onsite_app_view_content": 135,
+     "app_custom_event.fb_mobile_content_view": 135,
+     "purchase": 35,
+     "omni_purchase": 35,
+     "offsite_conversion.fb_pixel_purchase": 32,
+     "onsite_app_add_to_cart": 20,
+     "app_custom_event.fb_mobile_add_to_cart": 20,
+     "onsite_app_purchase": 3,
+     "app_custom_event.fb_mobile_purchase": 3
+    },
+    "catalog_segment_value": {
+     "omni_view_content": 317,
+     "view_content": 317,
+     "offsite_conversion.fb_pixel_view_content": 317,
+     "add_to_cart": 152,
+     "omni_add_to_cart": 152,
+     "offsite_conversion.fb_pixel_add_to_cart": 143,
+     "onsite_app_view_content": 135,
+     "app_custom_event.fb_mobile_content_view": 135,
+     "purchase": 35,
+     "omni_purchase": 35,
+     "offsite_conversion.fb_pixel_purchase": 32,
+     "onsite_app_add_to_cart": 20,
+     "app_custom_event.fb_mobile_add_to_cart": 20,
+     "onsite_app_purchase": 3,
+     "app_custom_event.fb_mobile_purchase": 3
+    }
+   },
+   "campaign_level_purchases": 46.0,
+   "account_level_rows": 192,
+   "account_level_purchases": 46.0,
+   "account_level_value": 23604000
+  },
+  "756914043795163": {
+   "name": "오늘의집 협력광고",
+   "type": "collab",
+   "rows": 394,
+   "campaign_level": {
+    "actions": {
+     "post_engagement": 352,
+     "page_engagement": 352,
+     "link_click": 347,
+     "omni_landing_page_view": 337,
+     "landing_page_view": 321,
+     "app_site_visit": 209,
+     "video_view": 154,
+     "post_interaction_gross": 95,
+     "post_interaction_net": 95,
+     "post_reaction": 65,
+     "onsite_conversion.post_net_like": 65,
+     "onsite_conversion.post_save": 51,
+     "onsite_conversion.post_net_save": 51,
+     "onsite_conversion.post_unlike": 25,
+     "post": 8
+    },
+    "action_values": {},
+    "catalog_segment_actions": {},
+    "catalog_segment_value": {}
+   },
+   "campaign_level_purchases": 0.0,
+   "account_level_rows": 329,
+   "account_level_purchases": 0.0,
+   "account_level_value": 0
+  },
+  "4158809747668597": {
+   "name": "CJ온스타일 협력광고",
+   "type": "collab",
+   "rows": 0,
+   "campaign_level": {
+    "actions": {},
+    "action_values": {},
+    "catalog_segment_actions": {},
+    "catalog_segment_value": {}
+   },
+   "campaign_level_purchases": 0,
+   "account_level_rows": 0,
+   "account_level_purchases": 0,
+   "account_level_value": 0
+  }
+ }
+}
