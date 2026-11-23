@@ -1,116 +1,104 @@
 {
- "since": "2026-11-15",
- "until": "2026-11-21",
+ "since": "2026-11-16",
+ "until": "2026-11-22",
  "accounts": {
   "456254580008371": {
    "name": "홈앤힐 자사몰",
    "type": "own",
-   "rows": 979,
+   "rows": 1003,
    "campaign_level": {
     "actions": {
-     "link_click": 677,
-     "initiate_checkout": 86,
-     "add_to_cart": 213,
-     "offsite_conversion.fb_pixel_initiate_checkout": 86,
-     "offsite_initiate_checkout_add_20_s_calls": 86,
-     "offsite_conversion.fb_pixel_add_to_cart": 213,
-     "offsite_content_view_add_20_s_calls": 683,
-     "landing_page_view": 672,
-     "omni_landing_page_view": 672,
-     "post_engagement": 679,
-     "page_engagement": 679,
-     "onsite_web_view_content": 683,
-     "onsite_web_add_to_cart": 213,
-     "onsite_web_app_view_content": 683,
-     "view_content": 683,
-     "onsite_web_app_add_to_cart": 213,
-     "onsite_web_initiate_checkout": 86,
-     "omni_initiated_checkout": 86,
-     "offsite_content_view_add_meta_leads": 683,
-     "offsite_add_to_cart_add_20_s_calls": 213,
-     "omni_add_to_cart": 213,
-     "omni_view_content": 683,
-     "offsite_conversion.fb_pixel_view_content": 683,
-     "post_interaction_gross": 101,
-     "post_interaction_net": 101,
-     "onsite_conversion.post_save": 60,
-     "onsite_conversion.post_net_save": 60,
+     "link_click": 687,
+     "add_to_cart": 207,
+     "offsite_conversion.fb_pixel_add_to_cart": 207,
+     "offsite_content_view_add_20_s_calls": 691,
+     "landing_page_view": 677,
+     "omni_landing_page_view": 677,
+     "post_engagement": 689,
+     "page_engagement": 689,
+     "onsite_web_view_content": 691,
+     "onsite_web_add_to_cart": 207,
+     "onsite_web_app_view_content": 691,
+     "view_content": 691,
+     "onsite_web_app_add_to_cart": 207,
+     "offsite_content_view_add_meta_leads": 691,
+     "offsite_add_to_cart_add_20_s_calls": 207,
+     "omni_add_to_cart": 207,
+     "omni_view_content": 691,
+     "offsite_conversion.fb_pixel_view_content": 691,
      "omni_search": 93,
      "offsite_search_add_meta_leads": 93,
      "offsite_search_add_20_s_calls": 93,
      "offsite_conversion.fb_pixel_search": 93,
+     "post_interaction_gross": 100,
+     "post_interaction_net": 100,
+     "onsite_conversion.post_save": 53,
+     "onsite_conversion.post_net_save": 53,
      "search": 93,
+     "web_in_store_purchase": 38,
+     "omni_purchase": 38,
+     "initiate_checkout": 84,
+     "offsite_purchase_add_20_s_calls": 38,
+     "offsite_conversion.fb_pixel_purchase": 38,
+     "offsite_conversion.fb_pixel_initiate_checkout": 84,
+     "offsite_initiate_checkout_add_20_s_calls": 84,
+     "onsite_web_app_purchase": 38,
+     "purchase": 38,
+     "web_app_in_store_purchase": 38,
+     "onsite_web_initiate_checkout": 84,
+     "omni_initiated_checkout": 84,
+     "onsite_web_purchase": 38,
+     "post_reaction": 55,
+     "onsite_conversion.post_net_like": 55,
+     "onsite_conversion.post_unlike": 16,
+     "comment": 1,
+     "onsite_conversion.post_net_comment": 1,
      "offsite_complete_registration_add_meta_leads": 26,
-     "web_in_store_purchase": 40,
-     "omni_purchase": 40,
      "omni_complete_registration": 26,
-     "offsite_purchase_add_20_s_calls": 40,
-     "offsite_conversion.fb_pixel_purchase": 40,
      "offsite_conversion.fb_pixel_complete_registration": 26,
      "offsite_complete_registration_add_20_s_calls": 26,
-     "onsite_web_app_purchase": 40,
-     "purchase": 40,
      "complete_registration": 26,
-     "web_app_in_store_purchase": 40,
-     "onsite_web_purchase": 40,
-     "post_reaction": 52,
-     "onsite_conversion.post_net_like": 52,
-     "post": 21,
-     "onsite_conversion.post_unlike": 12,
-     "comment": 1,
-     "onsite_conversion.post_net_comment": 1
+     "post": 22
     },
     "action_values": {
-     "onsite_web_app_add_to_cart": 213,
-     "onsite_web_add_to_cart": 213,
-     "omni_initiated_checkout": 86,
-     "offsite_conversion.fb_pixel_view_content": 683,
-     "offsite_conversion.fb_pixel_add_to_cart": 213,
-     "omni_view_content": 683,
-     "onsite_web_initiate_checkout": 86,
-     "add_to_cart": 213,
-     "view_content": 683,
-     "offsite_conversion.fb_pixel_initiate_checkout": 86,
-     "onsite_web_view_content": 683,
-     "onsite_web_app_view_content": 683,
-     "initiate_checkout": 86,
-     "omni_add_to_cart": 213,
-     "onsite_web_app_purchase": 40,
-     "onsite_web_purchase": 40,
-     "purchase": 40,
-     "web_app_in_store_purchase": 40,
-     "offsite_conversion.fb_pixel_purchase": 40,
-     "omni_purchase": 40,
-     "web_in_store_purchase": 40,
-     "omni_purchase_margin": 25
+     "onsite_web_app_add_to_cart": 207,
+     "onsite_web_add_to_cart": 207,
+     "offsite_conversion.fb_pixel_view_content": 691,
+     "offsite_conversion.fb_pixel_add_to_cart": 207,
+     "omni_view_content": 691,
+     "add_to_cart": 207,
+     "view_content": 691,
+     "onsite_web_view_content": 691,
+     "onsite_web_app_view_content": 691,
+     "omni_add_to_cart": 207,
+     "onsite_web_app_purchase": 38,
+     "omni_initiated_checkout": 84,
+     "onsite_web_initiate_checkout": 84,
+     "onsite_web_purchase": 38,
+     "purchase": 38,
+     "web_app_in_store_purchase": 38,
+     "offsite_conversion.fb_pixel_initiate_checkout": 84,
+     "offsite_conversion.fb_pixel_purchase": 38,
+     "initiate_checkout": 84,
+     "omni_purchase": 38,
+     "web_in_store_purchase": 38,
+     "omni_purchase_margin": 23
     },
     "catalog_segment_actions": {},
     "catalog_segment_value": {}
    },
    "samples": [
     {
-     "date_start": "2026-11-15",
+     "date_start": "2026-11-16",
      "product_id": "14, 홈앤힐 포그 구스 이지클린 3/4/5인용 모듈소파 (davis/galaxy)",
      "actions": [
       {
        "action_type": "link_click",
-       "value": "9"
-      },
-      {
-       "action_type": "initiate_checkout",
-       "value": "0"
+       "value": "10"
       },
       {
        "action_type": "add_to_cart",
        "value": "0"
-      },
-      {
-       "action_type": "offsite_conversion.fb_pixel_initiate_checkout",
-       "value": "0"
-      },
-      {
-       "action_type": "offsite_initiate_checkout_add_20_s_calls",
-       "value": "3"
       },
       {
        "action_type": "offsite_conversion.fb_pixel_add_to_cart",
@@ -118,27 +106,27 @@
       },
       {
        "action_type": "offsite_content_view_add_20_s_calls",
-       "value": "16"
+       "value": "13"
       },
       {
        "action_type": "landing_page_view",
-       "value": "6"
+       "value": "11"
       },
       {
        "action_type": "omni_landing_page_view",
-       "value": "6"
+       "value": "11"
       },
       {
        "action_type": "post_engagement",
-       "value": "9"
+       "value": "10"
       },
       {
        "action_type": "page_engagement",
-       "value": "9"
+       "value": "10"
       },
       {
        "action_type": "onsite_web_view_content",
-       "value": "16"
+       "value": "13"
       },
       {
        "action_type": "onsite_web_add_to_cart",
@@ -146,7 +134,7 @@
       },
       {
        "action_type": "onsite_web_app_view_content",
-       "value": "16"
+       "value": "13"
       },
       {
        "action_type": "view_content",
@@ -157,16 +145,8 @@
        "value": "1"
       },
       {
-       "action_type": "onsite_web_initiate_checkout",
-       "value": "3"
-      },
-      {
-       "action_type": "omni_initiated_checkout",
-       "value": "0"
-      },
-      {
        "action_type": "offsite_content_view_add_meta_leads",
-       "value": "16"
+       "value": "13"
       },
       {
        "action_type": "offsite_add_to_cart_add_20_s_calls",
@@ -195,8 +175,126 @@
        "value": "449000"
       },
       {
-       "action_type": "omni_initiated_checkout",
+       "action_type": "offsite_conversion.fb_pixel_view_content",
        "value": "0"
+      },
+      {
+       "action_type": "offsite_conversion.fb_pixel_add_to_cart",
+       "value": "0"
+      },
+      {
+       "action_type": "omni_view_content",
+       "value": "0"
+      },
+      {
+       "action_type": "add_to_cart",
+       "value": "0"
+      },
+      {
+       "action_type": "view_content",
+       "value": "0"
+      },
+      {
+       "action_type": "onsite_web_view_content",
+       "value": "4708125"
+      },
+      {
+       "action_type": "onsite_web_app_view_content",
+       "value": "4708125"
+      },
+      {
+       "action_type": "omni_add_to_cart",
+       "value": "0"
+      }
+     ],
+     "catalog_segment_actions": null,
+     "catalog_segment_value": null
+    },
+    {
+     "date_start": "2026-11-16",
+     "product_id": "144, 홈앤힐 잘난 원목 슬라이딩 침대 2인세트(상단1+하단1)",
+     "actions": [
+      {
+       "action_type": "link_click",
+       "value": "6"
+      },
+      {
+       "action_type": "add_to_cart",
+       "value": "0"
+      },
+      {
+       "action_type": "offsite_conversion.fb_pixel_add_to_cart",
+       "value": "0"
+      },
+      {
+       "action_type": "offsite_content_view_add_20_s_calls",
+       "value": "9"
+      },
+      {
+       "action_type": "landing_page_view",
+       "value": "5"
+      },
+      {
+       "action_type": "omni_landing_page_view",
+       "value": "5"
+      },
+      {
+       "action_type": "post_engagement",
+       "value": "6"
+      },
+      {
+       "action_type": "page_engagement",
+       "value": "6"
+      },
+      {
+       "action_type": "onsite_web_view_content",
+       "value": "9"
+      },
+      {
+       "action_type": "onsite_web_add_to_cart",
+       "value": "2"
+      },
+      {
+       "action_type": "onsite_web_app_view_content",
+       "value": "9"
+      },
+      {
+       "action_type": "view_content",
+       "value": "0"
+      },
+      {
+       "action_type": "onsite_web_app_add_to_cart",
+       "value": "2"
+      },
+      {
+       "action_type": "offsite_content_view_add_meta_leads",
+       "value": "9"
+      },
+      {
+       "action_type": "offsite_add_to_cart_add_20_s_calls",
+       "value": "2"
+      },
+      {
+       "action_type": "omni_add_to_cart",
+       "value": "0"
+      },
+      {
+       "action_type": "omni_view_content",
+       "value": "0"
+      },
+      {
+       "action_type": "offsite_conversion.fb_pixel_view_content",
+       "value": "0"
+      }
+     ],
+     "action_values": [
+      {
+       "action_type": "onsite_web_app_add_to_cart",
+       "value": "1456000"
+      },
+      {
+       "action_type": "onsite_web_add_to_cart",
+       "value": "1456000"
       },
       {
        "action_type": "offsite_conversion.fb_pixel_view_content",
@@ -211,10 +309,6 @@
        "value": "0"
       },
       {
-       "action_type": "onsite_web_initiate_checkout",
-       "value": "749143"
-      },
-      {
        "action_type": "add_to_cart",
        "value": "0"
       },
@@ -223,20 +317,12 @@
        "value": "0"
       },
       {
-       "action_type": "offsite_conversion.fb_pixel_initiate_checkout",
-       "value": "0"
-      },
-      {
        "action_type": "onsite_web_view_content",
-       "value": "5005844"
+       "value": "4621111"
       },
       {
        "action_type": "onsite_web_app_view_content",
-       "value": "5005844"
-      },
-      {
-       "action_type": "initiate_checkout",
-       "value": "0"
+       "value": "4621111"
       },
       {
        "action_type": "omni_add_to_cart",
@@ -247,19 +333,51 @@
      "catalog_segment_value": null
     },
     {
-     "date_start": "2026-11-15",
-     "product_id": "150, 홈앤힐 하모 원목 데이베드 슈퍼싱글",
+     "date_start": "2026-11-16",
+     "product_id": "198, 쉬어 로코 2단 3단 전면 아기 책장 교구장 (화이트/블랙) - 주식회사 홈앤힐",
      "actions": [
       {
+       "action_type": "web_in_store_purchase",
+       "value": "1"
+      },
+      {
+       "action_type": "omni_search",
+       "value": "0"
+      },
+      {
+       "action_type": "omni_purchase",
+       "value": "0"
+      },
+      {
        "action_type": "link_click",
-       "value": "8"
+       "value": "16"
       },
       {
        "action_type": "initiate_checkout",
        "value": "0"
       },
       {
+       "action_type": "offsite_search_add_meta_leads",
+       "value": "2"
+      },
+      {
+       "action_type": "offsite_search_add_20_s_calls",
+       "value": "2"
+      },
+      {
+       "action_type": "offsite_conversion.fb_pixel_search",
+       "value": "0"
+      },
+      {
+       "action_type": "offsite_purchase_add_20_s_calls",
+       "value": "1"
+      },
+      {
        "action_type": "add_to_cart",
+       "value": "0"
+      },
+      {
+       "action_type": "offsite_conversion.fb_pixel_purchase",
        "value": "0"
       },
       {
@@ -268,7 +386,7 @@
       },
       {
        "action_type": "offsite_initiate_checkout_add_20_s_calls",
-       "value": "2"
+       "value": "1"
       },
       {
        "action_type": "offsite_conversion.fb_pixel_add_to_cart",
@@ -276,7 +394,7 @@
       },
       {
        "action_type": "offsite_content_view_add_20_s_calls",
-       "value": "17"
+       "value": "20"
       },
       {
        "action_type": "landing_page_view",
@@ -288,35 +406,47 @@
       },
       {
        "action_type": "post_engagement",
-       "value": "8"
+       "value": "16"
+      },
+      {
+       "action_type": "onsite_web_app_purchase",
+       "value": "1"
       },
       {
        "action_type": "page_engagement",
-       "value": "8"
+       "value": "16"
+      },
+      {
+       "action_type": "purchase",
+       "value": "0"
       },
       {
        "action_type": "onsite_web_view_content",
-       "value": "17"
+       "value": "20"
       },
       {
        "action_type": "onsite_web_add_to_cart",
-       "value": "3"
+       "value": "1"
       },
       {
        "action_type": "onsite_web_app_view_content",
-       "value": "17"
+       "value": "20"
       },
       {
        "action_type": "view_content",
        "value": "0"
       },
       {
+       "action_type": "web_app_in_store_purchase",
+       "value": "1"
+      },
+      {
        "action_type": "onsite_web_app_add_to_cart",
-       "value": "3"
+       "value": "1"
       },
       {
        "action_type": "onsite_web_initiate_checkout",
-       "value": "2"
+       "value": "1"
       },
       {
        "action_type": "omni_initiated_checkout",
@@ -324,11 +454,19 @@
       },
       {
        "action_type": "offsite_content_view_add_meta_leads",
-       "value": "17"
+       "value": "20"
+      },
+      {
+       "action_type": "onsite_web_purchase",
+       "value": "1"
+      },
+      {
+       "action_type": "search",
+       "value": "0"
       },
       {
        "action_type": "offsite_add_to_cart_add_20_s_calls",
-       "value": "3"
+       "value": "1"
       },
       {
        "action_type": "omni_add_to_cart",
@@ -345,12 +483,16 @@
      ],
      "action_values": [
       {
+       "action_type": "onsite_web_app_purchase",
+       "value": "99000"
+      },
+      {
        "action_type": "onsite_web_app_add_to_cart",
-       "value": "2700000"
+       "value": "99000"
       },
       {
        "action_type": "onsite_web_add_to_cart",
-       "value": "2700000"
+       "value": "99000"
       },
       {
        "action_type": "omni_initiated_checkout",
@@ -370,10 +512,18 @@
       },
       {
        "action_type": "onsite_web_initiate_checkout",
-       "value": "1912000"
+       "value": "99000"
+      },
+      {
+       "action_type": "onsite_web_purchase",
+       "value": "99000"
       },
       {
        "action_type": "add_to_cart",
+       "value": "0"
+      },
+      {
+       "action_type": "purchase",
        "value": "0"
       },
       {
@@ -381,16 +531,24 @@
        "value": "0"
       },
       {
+       "action_type": "web_app_in_store_purchase",
+       "value": "990"
+      },
+      {
        "action_type": "offsite_conversion.fb_pixel_initiate_checkout",
        "value": "0"
       },
       {
        "action_type": "onsite_web_view_content",
-       "value": "6928531"
+       "value": "3357117"
       },
       {
        "action_type": "onsite_web_app_view_content",
-       "value": "6928531"
+       "value": "3357117"
+      },
+      {
+       "action_type": "offsite_conversion.fb_pixel_purchase",
+       "value": "0"
       },
       {
        "action_type": "initiate_checkout",
@@ -399,127 +557,17 @@
       {
        "action_type": "omni_add_to_cart",
        "value": "0"
-      }
-     ],
-     "catalog_segment_actions": null,
-     "catalog_segment_value": null
-    },
-    {
-     "date_start": "2026-11-15",
-     "product_id": "198, 쉬어 로코 2단 3단 전면 아기 책장 교구장 (화이트/블랙)",
-     "actions": [
-      {
-       "action_type": "link_click",
-       "value": "15"
       },
       {
-       "action_type": "add_to_cart",
+       "action_type": "omni_purchase",
        "value": "0"
       },
       {
-       "action_type": "offsite_conversion.fb_pixel_add_to_cart",
-       "value": "0"
+       "action_type": "web_in_store_purchase",
+       "value": "99000"
       },
       {
-       "action_type": "offsite_content_view_add_20_s_calls",
-       "value": "11"
-      },
-      {
-       "action_type": "landing_page_view",
-       "value": "9"
-      },
-      {
-       "action_type": "omni_landing_page_view",
-       "value": "9"
-      },
-      {
-       "action_type": "post_engagement",
-       "value": "15"
-      },
-      {
-       "action_type": "page_engagement",
-       "value": "15"
-      },
-      {
-       "action_type": "onsite_web_view_content",
-       "value": "11"
-      },
-      {
-       "action_type": "onsite_web_add_to_cart",
-       "value": "1"
-      },
-      {
-       "action_type": "onsite_web_app_view_content",
-       "value": "11"
-      },
-      {
-       "action_type": "view_content",
-       "value": "0"
-      },
-      {
-       "action_type": "onsite_web_app_add_to_cart",
-       "value": "1"
-      },
-      {
-       "action_type": "offsite_content_view_add_meta_leads",
-       "value": "11"
-      },
-      {
-       "action_type": "offsite_add_to_cart_add_20_s_calls",
-       "value": "1"
-      },
-      {
-       "action_type": "omni_add_to_cart",
-       "value": "0"
-      },
-      {
-       "action_type": "omni_view_content",
-       "value": "0"
-      },
-      {
-       "action_type": "offsite_conversion.fb_pixel_view_content",
-       "value": "0"
-      }
-     ],
-     "action_values": [
-      {
-       "action_type": "onsite_web_app_add_to_cart",
-       "value": "69000"
-      },
-      {
-       "action_type": "onsite_web_add_to_cart",
-       "value": "69000"
-      },
-      {
-       "action_type": "offsite_conversion.fb_pixel_view_content",
-       "value": "0"
-      },
-      {
-       "action_type": "offsite_conversion.fb_pixel_add_to_cart",
-       "value": "0"
-      },
-      {
-       "action_type": "omni_view_content",
-       "value": "0"
-      },
-      {
-       "action_type": "add_to_cart",
-       "value": "0"
-      },
-      {
-       "action_type": "view_content",
-       "value": "0"
-      },
-      {
-       "action_type": "onsite_web_view_content",
-       "value": "2271333"
-      },
-      {
-       "action_type": "onsite_web_app_view_content",
-       "value": "2271333"
-      },
-      {
-       "action_type": "omni_add_to_cart",
+       "action_type": "omni_purchase_margin",
        "value": "0"
       }
      ],
@@ -527,128 +575,120 @@
      "catalog_segment_value": null
     }
    ],
-   "campaign_level_purchases": 53.0,
-   "account_level_rows": 891,
-   "account_level_purchases": 53.0,
-   "account_level_value": 12850800
+   "campaign_level_purchases": 50.0,
+   "account_level_rows": 896,
+   "account_level_purchases": 50.0,
+   "account_level_value": 14058650
   },
   "1321099275646928": {
    "name": "네이버 브랜드스토어 협력광고",
    "type": "collab",
-   "rows": 259,
+   "rows": 257,
    "campaign_level": {
     "actions": {
-     "link_click": 124,
-     "landing_page_view": 135,
-     "omni_landing_page_view": 136,
-     "post_engagement": 124,
-     "post_interaction_gross": 63,
-     "page_engagement": 124,
-     "post_interaction_net": 65,
-     "onsite_conversion.post_save": 16,
-     "onsite_conversion.post_net_save": 16,
-     "post_reaction": 53,
-     "onsite_conversion.post_net_like": 55,
-     "onsite_conversion.post_unlike": 27,
-     "app_site_visit": 34,
-     "initiate_checkout": 17,
-     "offsite_conversion.fb_pixel_initiate_checkout": 17,
-     "offsite_initiate_checkout_add_20_s_calls": 17,
-     "onsite_web_initiate_checkout": 17,
-     "omni_initiated_checkout": 17,
+     "link_click": 122,
+     "landing_page_view": 132,
+     "omni_landing_page_view": 133,
+     "post_engagement": 122,
+     "page_engagement": 122,
+     "post_reaction": 46,
+     "onsite_conversion.post_unlike": 23,
+     "post_interaction_gross": 55,
+     "post_interaction_net": 58,
+     "onsite_conversion.post_save": 12,
+     "onsite_conversion.post_net_save": 12,
+     "onsite_conversion.post_net_like": 49,
+     "app_site_visit": 33,
+     "initiate_checkout": 18,
+     "offsite_conversion.fb_pixel_initiate_checkout": 18,
+     "offsite_initiate_checkout_add_20_s_calls": 18,
+     "onsite_web_initiate_checkout": 18,
+     "omni_initiated_checkout": 18,
+     "post": 4,
      "offsite_conversion.fb_pixel_add_to_wishlist": 7,
      "omni_add_to_wishlist": 7,
      "add_to_wishlist": 7,
-     "post": 4,
      "onsite_conversion.messaging_conversation_started_7d": 1
     },
     "action_values": {},
     "catalog_segment_actions": {
-     "omni_view_content": 161,
-     "view_content": 161,
+     "omni_view_content": 158,
+     "onsite_app_purchase": 12,
+     "offsite_conversion.fb_pixel_add_to_cart": 39,
+     "view_content": 158,
      "purchase": 17,
      "omni_purchase": 17,
-     "onsite_app_view_content": 83,
-     "offsite_conversion.fb_pixel_purchase": 9,
-     "app_custom_event.fb_mobile_content_view": 83,
-     "offsite_conversion.fb_pixel_view_content": 161,
-     "onsite_app_add_to_cart": 16,
-     "add_to_cart": 52,
-     "app_custom_event.fb_mobile_add_to_cart": 16,
-     "omni_add_to_cart": 52,
-     "offsite_conversion.fb_pixel_add_to_cart": 42,
-     "onsite_app_purchase": 10,
-     "app_custom_event.fb_mobile_purchase": 10
+     "onsite_app_view_content": 79,
+     "add_to_cart": 46,
+     "app_custom_event.fb_mobile_purchase": 12,
+     "app_custom_event.fb_mobile_content_view": 79,
+     "offsite_conversion.fb_pixel_view_content": 158,
+     "omni_add_to_cart": 46,
+     "onsite_app_add_to_cart": 13,
+     "app_custom_event.fb_mobile_add_to_cart": 13,
+     "offsite_conversion.fb_pixel_purchase": 7
     },
     "catalog_segment_value": {
-     "omni_view_content": 161,
-     "view_content": 161,
+     "omni_view_content": 158,
+     "onsite_app_purchase": 12,
+     "offsite_conversion.fb_pixel_add_to_cart": 39,
+     "view_content": 158,
      "purchase": 17,
      "omni_purchase": 17,
-     "onsite_app_view_content": 83,
-     "offsite_conversion.fb_pixel_purchase": 9,
-     "app_custom_event.fb_mobile_content_view": 83,
-     "offsite_conversion.fb_pixel_view_content": 161,
-     "onsite_app_add_to_cart": 16,
-     "add_to_cart": 52,
-     "app_custom_event.fb_mobile_add_to_cart": 16,
-     "omni_add_to_cart": 52,
-     "offsite_conversion.fb_pixel_add_to_cart": 42,
-     "onsite_app_purchase": 10,
-     "app_custom_event.fb_mobile_purchase": 10
+     "onsite_app_view_content": 79,
+     "add_to_cart": 46,
+     "app_custom_event.fb_mobile_purchase": 12,
+     "app_custom_event.fb_mobile_content_view": 79,
+     "offsite_conversion.fb_pixel_view_content": 158,
+     "omni_add_to_cart": 46,
+     "onsite_app_add_to_cart": 13,
+     "app_custom_event.fb_mobile_add_to_cart": 13,
+     "offsite_conversion.fb_pixel_purchase": 7
     }
    },
    "samples": [
     {
-     "date_start": "2026-11-15",
+     "date_start": "2026-11-16",
      "product_id": "10933310996, 홈앤힐 아루 트윈 저상형 패밀리 침대 프레임 라운드형 (SS+K)",
      "actions": [
       {
        "action_type": "link_click",
-       "value": "19"
+       "value": "16"
       },
       {
        "action_type": "landing_page_view",
-       "value": "11"
+       "value": "12"
       },
       {
        "action_type": "omni_landing_page_view",
-       "value": "11"
+       "value": "12"
       },
       {
        "action_type": "post_engagement",
-       "value": "21"
-      },
-      {
-       "action_type": "post_interaction_gross",
-       "value": "2"
+       "value": "16"
       },
       {
        "action_type": "page_engagement",
-       "value": "21"
-      },
-      {
-       "action_type": "post_interaction_net",
-       "value": "2"
-      },
-      {
-       "action_type": "onsite_conversion.post_save",
-       "value": "2"
-      },
-      {
-       "action_type": "onsite_conversion.post_net_save",
-       "value": "2"
+       "value": "16"
       }
      ],
      "action_values": null,
      "catalog_segment_actions": [
       {
        "action_type": "omni_view_content",
-       "value": "27"
+       "value": "45"
+      },
+      {
+       "action_type": "onsite_app_purchase",
+       "value": "1"
+      },
+      {
+       "action_type": "offsite_conversion.fb_pixel_add_to_cart",
+       "value": "1"
       },
       {
        "action_type": "view_content",
-       "value": "27"
+       "value": "45"
       },
       {
        "action_type": "purchase",
@@ -660,58 +700,82 @@
       },
       {
        "action_type": "onsite_app_view_content",
-       "value": "5"
+       "value": "3"
       },
       {
-       "action_type": "offsite_conversion.fb_pixel_purchase",
+       "action_type": "add_to_cart",
+       "value": "1"
+      },
+      {
+       "action_type": "app_custom_event.fb_mobile_purchase",
        "value": "1"
       },
       {
        "action_type": "app_custom_event.fb_mobile_content_view",
-       "value": "5"
+       "value": "3"
       },
       {
        "action_type": "offsite_conversion.fb_pixel_view_content",
-       "value": "22"
+       "value": "42"
+      },
+      {
+       "action_type": "omni_add_to_cart",
+       "value": "1"
       }
      ],
      "catalog_segment_value": [
       {
        "action_type": "omni_view_content",
-       "value": "14049333"
+       "value": "21353000"
+      },
+      {
+       "action_type": "onsite_app_purchase",
+       "value": "438000"
+      },
+      {
+       "action_type": "offsite_conversion.fb_pixel_add_to_cart",
+       "value": "438000"
       },
       {
        "action_type": "view_content",
-       "value": "14049333"
+       "value": "21353000"
       },
       {
        "action_type": "purchase",
-       "value": "519000"
+       "value": "438000"
       },
       {
        "action_type": "omni_purchase",
-       "value": "519000"
+       "value": "438000"
       },
       {
        "action_type": "onsite_app_view_content",
-       "value": "2464000"
+       "value": "1535000"
       },
       {
-       "action_type": "offsite_conversion.fb_pixel_purchase",
-       "value": "519000"
+       "action_type": "add_to_cart",
+       "value": "438000"
+      },
+      {
+       "action_type": "app_custom_event.fb_mobile_purchase",
+       "value": "438000"
       },
       {
        "action_type": "app_custom_event.fb_mobile_content_view",
-       "value": "2464000"
+       "value": "1535000"
       },
       {
        "action_type": "offsite_conversion.fb_pixel_view_content",
-       "value": "11585333"
+       "value": "19818000"
+      },
+      {
+       "action_type": "omni_add_to_cart",
+       "value": "438000"
       }
      ]
     },
     {
-     "date_start": "2026-11-15",
+     "date_start": "2026-11-16",
      "product_id": "10977926905, 홈앤힐 아루 저상형 침대프레임 데이베드 라운드형 슈퍼싱글",
      "actions": [
       {
@@ -719,55 +783,39 @@
        "value": "18"
       },
       {
-       "action_type": "post_reaction",
-       "value": "2"
-      },
-      {
        "action_type": "landing_page_view",
-       "value": "9"
+       "value": "14"
       },
       {
        "action_type": "omni_landing_page_view",
-       "value": "9"
+       "value": "14"
       },
       {
        "action_type": "post_engagement",
-       "value": "20"
-      },
-      {
-       "action_type": "post_interaction_gross",
-       "value": "2"
+       "value": "18"
       },
       {
        "action_type": "page_engagement",
-       "value": "20"
-      },
-      {
-       "action_type": "post_interaction_net",
-       "value": "2"
-      },
-      {
-       "action_type": "onsite_conversion.post_net_like",
-       "value": "2"
+       "value": "18"
       }
      ],
      "action_values": null,
      "catalog_segment_actions": [
       {
-       "action_type": "onsite_app_add_to_cart",
+       "action_type": "omni_view_content",
+       "value": "27"
+      },
+      {
+       "action_type": "offsite_conversion.fb_pixel_add_to_cart",
        "value": "1"
       },
       {
-       "action_type": "omni_view_content",
-       "value": "32"
-      },
-      {
        "action_type": "view_content",
-       "value": "32"
+       "value": "27"
       },
       {
        "action_type": "onsite_app_view_content",
-       "value": "11"
+       "value": "1"
       },
       {
        "action_type": "add_to_cart",
@@ -775,15 +823,11 @@
       },
       {
        "action_type": "app_custom_event.fb_mobile_content_view",
-       "value": "11"
+       "value": "1"
       },
       {
        "action_type": "offsite_conversion.fb_pixel_view_content",
-       "value": "21"
-      },
-      {
-       "action_type": "app_custom_event.fb_mobile_add_to_cart",
-       "value": "1"
+       "value": "26"
       },
       {
        "action_type": "omni_add_to_cart",
@@ -792,81 +836,85 @@
      ],
      "catalog_segment_value": [
       {
-       "action_type": "onsite_app_add_to_cart",
-       "value": "1245000"
+       "action_type": "omni_view_content",
+       "value": "13052000"
       },
       {
-       "action_type": "omni_view_content",
-       "value": "11901000"
+       "action_type": "offsite_conversion.fb_pixel_add_to_cart",
+       "value": "209000"
       },
       {
        "action_type": "view_content",
-       "value": "11901000"
+       "value": "13052000"
       },
       {
        "action_type": "onsite_app_view_content",
-       "value": "3997000"
+       "value": "309000"
       },
       {
        "action_type": "add_to_cart",
-       "value": "1245000"
+       "value": "209000"
       },
       {
        "action_type": "app_custom_event.fb_mobile_content_view",
-       "value": "3997000"
+       "value": "309000"
       },
       {
        "action_type": "offsite_conversion.fb_pixel_view_content",
-       "value": "7904000"
-      },
-      {
-       "action_type": "app_custom_event.fb_mobile_add_to_cart",
-       "value": "1245000"
+       "value": "12743000"
       },
       {
        "action_type": "omni_add_to_cart",
-       "value": "1245000"
+       "value": "209000"
       }
      ]
     },
     {
-     "date_start": "2026-11-15",
-     "product_id": "11017588860, 홈앤힐 휴고LED 데이베드 저상형 아기침대 패브릭 슈퍼싱글",
+     "date_start": "2026-11-16",
+     "product_id": "10980165467, 홈앤힐 아루 저상형 침대프레임 데이베드 라운드형 킹",
      "actions": [
       {
        "action_type": "link_click",
-       "value": "11"
+       "value": "15"
       },
       {
        "action_type": "post_reaction",
-       "value": "2"
+       "value": "3"
       },
       {
        "action_type": "landing_page_view",
-       "value": "3"
+       "value": "10"
       },
       {
        "action_type": "omni_landing_page_view",
-       "value": "3"
+       "value": "10"
       },
       {
        "action_type": "onsite_conversion.post_unlike",
-       "value": "1"
-      },
-      {
-       "action_type": "post_engagement",
-       "value": "13"
-      },
-      {
-       "action_type": "post_interaction_gross",
        "value": "2"
       },
       {
+       "action_type": "post_engagement",
+       "value": "19"
+      },
+      {
+       "action_type": "post_interaction_gross",
+       "value": "4"
+      },
+      {
        "action_type": "page_engagement",
-       "value": "13"
+       "value": "19"
       },
       {
        "action_type": "post_interaction_net",
+       "value": "2"
+      },
+      {
+       "action_type": "onsite_conversion.post_save",
+       "value": "1"
+      },
+      {
+       "action_type": "onsite_conversion.post_net_save",
        "value": "1"
       },
       {
@@ -877,8 +925,12 @@
      "action_values": null,
      "catalog_segment_actions": [
       {
+       "action_type": "onsite_app_add_to_cart",
+       "value": "1"
+      },
+      {
        "action_type": "omni_view_content",
-       "value": "12"
+       "value": "62"
       },
       {
        "action_type": "offsite_conversion.fb_pixel_add_to_cart",
@@ -886,83 +938,106 @@
       },
       {
        "action_type": "view_content",
-       "value": "12"
+       "value": "62"
+      },
+      {
+       "action_type": "onsite_app_view_content",
+       "value": "23"
       },
       {
        "action_type": "add_to_cart",
-       "value": "1"
+       "value": "2"
+      },
+      {
+       "action_type": "app_custom_event.fb_mobile_content_view",
+       "value": "23"
       },
       {
        "action_type": "offsite_conversion.fb_pixel_view_content",
-       "value": "12"
+       "value": "39"
+      },
+      {
+       "action_type": "app_custom_event.fb_mobile_add_to_cart",
+       "value": "1"
       },
       {
        "action_type": "omni_add_to_cart",
-       "value": "1"
+       "value": "2"
       }
      ],
      "catalog_segment_value": [
       {
+       "action_type": "onsite_app_add_to_cart",
+       "value": "589000"
+      },
+      {
        "action_type": "omni_view_content",
-       "value": "5287000"
+       "value": "32436000"
       },
       {
        "action_type": "offsite_conversion.fb_pixel_add_to_cart",
-       "value": "399000"
+       "value": "379000"
       },
       {
        "action_type": "view_content",
-       "value": "5287000"
+       "value": "32436000"
+      },
+      {
+       "action_type": "onsite_app_view_content",
+       "value": "11985000"
       },
       {
        "action_type": "add_to_cart",
-       "value": "399000"
+       "value": "968000"
+      },
+      {
+       "action_type": "app_custom_event.fb_mobile_content_view",
+       "value": "11985000"
       },
       {
        "action_type": "offsite_conversion.fb_pixel_view_content",
-       "value": "5287000"
+       "value": "20451000"
+      },
+      {
+       "action_type": "app_custom_event.fb_mobile_add_to_cart",
+       "value": "589000"
       },
       {
        "action_type": "omni_add_to_cart",
-       "value": "399000"
+       "value": "968000"
       }
      ]
     }
    ],
    "campaign_level_purchases": 22.0,
-   "account_level_rows": 148,
+   "account_level_rows": 149,
    "account_level_purchases": 22.0,
-   "account_level_value": 10730000,
-   "ad_level_rows": 1707,
-   "ad_level_rows_with_segment": 607,
+   "account_level_value": 10179000,
+   "ad_level_rows": 1639,
+   "ad_level_rows_with_segment": 556,
    "ad_level_purchases": 22.0
   },
   "756914043795163": {
    "name": "오늘의집 협력광고",
    "type": "collab",
-   "rows": 634,
+   "rows": 636,
    "campaign_level": {
     "actions": {
-     "link_click": 437,
-     "landing_page_view": 421,
-     "app_site_visit": 261,
-     "omni_landing_page_view": 436,
-     "post_engagement": 451,
-     "page_engagement": 451,
-     "video_view": 294,
-     "post_reaction": 50,
+     "link_click": 439,
+     "post_reaction": 52,
+     "landing_page_view": 425,
+     "app_site_visit": 263,
+     "omni_landing_page_view": 442,
      "onsite_conversion.post_unlike": 23,
-     "post_interaction_gross": 82,
-     "post_interaction_net": 83,
-     "onsite_conversion.post_save": 45,
-     "onsite_conversion.post_net_save": 45,
-     "onsite_conversion.post_net_like": 51,
-     "post": 15,
-     "offsite_complete_registration_add_meta_leads": 1,
-     "omni_complete_registration": 1,
-     "offsite_conversion.fb_pixel_complete_registration": 1,
-     "offsite_complete_registration_add_20_s_calls": 1,
-     "complete_registration": 1,
+     "post_engagement": 455,
+     "post_interaction_gross": 79,
+     "page_engagement": 455,
+     "post_interaction_net": 80,
+     "onsite_conversion.post_net_like": 53,
+     "video_view": 288,
+     "onsite_conversion.post_save": 38,
+     "onsite_conversion.post_net_save": 38,
+     "post": 13,
      "onsite_conversion.messaging_conversation_started_7d": 3,
      "app_store_visit": 4,
      "onsite_conversion.messaging_first_reply": 2,
@@ -972,43 +1047,43 @@
     },
     "action_values": {},
     "catalog_segment_actions": {
-     "omni_view_content": 469,
-     "view_content": 469,
-     "onsite_app_view_content": 375,
-     "app_custom_event.fb_mobile_content_view": 375,
-     "onsite_app_add_to_cart": 198,
-     "add_to_cart": 225,
-     "app_custom_event.fb_mobile_add_to_cart": 198,
-     "omni_add_to_cart": 225,
-     "offsite_conversion.fb_pixel_add_to_cart": 78,
-     "offsite_conversion.fb_pixel_view_content": 377,
-     "onsite_app_purchase": 54,
-     "purchase": 61,
-     "omni_purchase": 61,
-     "app_custom_event.fb_mobile_purchase": 54,
-     "offsite_conversion.fb_pixel_purchase": 9
+     "omni_view_content": 480,
+     "view_content": 480,
+     "onsite_app_view_content": 378,
+     "app_custom_event.fb_mobile_content_view": 378,
+     "offsite_conversion.fb_pixel_add_to_cart": 70,
+     "add_to_cart": 227,
+     "offsite_conversion.fb_pixel_view_content": 385,
+     "omni_add_to_cart": 227,
+     "onsite_app_add_to_cart": 199,
+     "app_custom_event.fb_mobile_add_to_cart": 199,
+     "onsite_app_purchase": 57,
+     "purchase": 66,
+     "omni_purchase": 66,
+     "app_custom_event.fb_mobile_purchase": 57,
+     "offsite_conversion.fb_pixel_purchase": 13
     },
     "catalog_segment_value": {
-     "omni_view_content": 469,
-     "view_content": 469,
-     "onsite_app_view_content": 375,
-     "app_custom_event.fb_mobile_content_view": 375,
-     "onsite_app_add_to_cart": 198,
-     "add_to_cart": 225,
-     "app_custom_event.fb_mobile_add_to_cart": 198,
-     "omni_add_to_cart": 225,
-     "offsite_conversion.fb_pixel_add_to_cart": 78,
-     "offsite_conversion.fb_pixel_view_content": 377,
-     "onsite_app_purchase": 54,
-     "purchase": 61,
-     "omni_purchase": 61,
-     "app_custom_event.fb_mobile_purchase": 54,
-     "offsite_conversion.fb_pixel_purchase": 9
+     "omni_view_content": 480,
+     "view_content": 480,
+     "onsite_app_view_content": 378,
+     "app_custom_event.fb_mobile_content_view": 378,
+     "offsite_conversion.fb_pixel_add_to_cart": 70,
+     "add_to_cart": 227,
+     "offsite_conversion.fb_pixel_view_content": 385,
+     "omni_add_to_cart": 227,
+     "onsite_app_add_to_cart": 199,
+     "app_custom_event.fb_mobile_add_to_cart": 199,
+     "onsite_app_purchase": 57,
+     "purchase": 66,
+     "omni_purchase": 66,
+     "app_custom_event.fb_mobile_purchase": 57,
+     "offsite_conversion.fb_pixel_purchase": 13
     }
    },
    "samples": [
     {
-     "date_start": "2026-11-15",
+     "date_start": "2026-11-16",
      "product_id": "2283772, 산더 템바보드 LED 조명 고무나무 원목 침대프레임 Q/K/LK/EK(월넛)",
      "actions": [
       {
@@ -1016,126 +1091,31 @@
        "value": "2"
       },
       {
-       "action_type": "post_engagement",
-       "value": "4"
-      },
-      {
-       "action_type": "page_engagement",
-       "value": "4"
-      },
-      {
-       "action_type": "video_view",
-       "value": "2"
-      }
-     ],
-     "action_values": null,
-     "catalog_segment_actions": [
-      {
-       "action_type": "onsite_app_add_to_cart",
-       "value": "1"
-      },
-      {
-       "action_type": "omni_view_content",
-       "value": "8"
-      },
-      {
-       "action_type": "view_content",
-       "value": "8"
-      },
-      {
-       "action_type": "onsite_app_view_content",
-       "value": "8"
-      },
-      {
-       "action_type": "add_to_cart",
-       "value": "1"
-      },
-      {
-       "action_type": "app_custom_event.fb_mobile_content_view",
-       "value": "8"
-      },
-      {
-       "action_type": "app_custom_event.fb_mobile_add_to_cart",
-       "value": "1"
-      },
-      {
-       "action_type": "omni_add_to_cart",
-       "value": "1"
-      }
-     ],
-     "catalog_segment_value": [
-      {
-       "action_type": "onsite_app_add_to_cart",
-       "value": "119000"
-      },
-      {
-       "action_type": "omni_view_content",
-       "value": "2832500"
-      },
-      {
-       "action_type": "view_content",
-       "value": "2832500"
-      },
-      {
-       "action_type": "onsite_app_view_content",
-       "value": "2832500"
-      },
-      {
-       "action_type": "add_to_cart",
-       "value": "119000"
-      },
-      {
-       "action_type": "app_custom_event.fb_mobile_content_view",
-       "value": "2832500"
-      },
-      {
-       "action_type": "app_custom_event.fb_mobile_add_to_cart",
-       "value": "119000"
-      },
-      {
-       "action_type": "omni_add_to_cart",
-       "value": "119000"
-      }
-     ]
-    },
-    {
-     "date_start": "2026-11-15",
-     "product_id": "3144450, 아루 트윈 저상형 엣지/라운드형 패밀리 침대 프레임 SS+K(SS+SS/K+K)",
-     "actions": [
-      {
-       "action_type": "link_click",
-       "value": "5"
-      },
-      {
        "action_type": "landing_page_view",
-       "value": "5"
+       "value": "2"
       },
       {
        "action_type": "omni_landing_page_view",
-       "value": "5"
+       "value": "2"
       },
       {
        "action_type": "post_engagement",
-       "value": "20"
+       "value": "7"
       },
       {
        "action_type": "page_engagement",
-       "value": "20"
+       "value": "7"
       },
       {
        "action_type": "video_view",
-       "value": "15"
+       "value": "5"
       }
      ],
      "action_values": null,
      "catalog_segment_actions": [
       {
-       "action_type": "onsite_app_add_to_cart",
-       "value": "2"
-      },
-      {
        "action_type": "omni_view_content",
-       "value": "37"
+       "value": "6"
       },
       {
        "action_type": "offsite_conversion.fb_pixel_add_to_cart",
@@ -1143,87 +1123,71 @@
       },
       {
        "action_type": "view_content",
-       "value": "37"
+       "value": "6"
       },
       {
        "action_type": "onsite_app_view_content",
-       "value": "32"
-      },
-      {
-       "action_type": "add_to_cart",
-       "value": "3"
-      },
-      {
-       "action_type": "app_custom_event.fb_mobile_content_view",
-       "value": "32"
-      },
-      {
-       "action_type": "offsite_conversion.fb_pixel_view_content",
        "value": "5"
       },
       {
-       "action_type": "app_custom_event.fb_mobile_add_to_cart",
-       "value": "2"
+       "action_type": "add_to_cart",
+       "value": "1"
+      },
+      {
+       "action_type": "app_custom_event.fb_mobile_content_view",
+       "value": "5"
+      },
+      {
+       "action_type": "offsite_conversion.fb_pixel_view_content",
+       "value": "1"
       },
       {
        "action_type": "omni_add_to_cart",
-       "value": "3"
+       "value": "1"
       }
      ],
      "catalog_segment_value": [
       {
-       "action_type": "onsite_app_add_to_cart",
-       "value": "806000"
-      },
-      {
        "action_type": "omni_view_content",
-       "value": "12597900"
+       "value": "1809000"
       },
       {
        "action_type": "offsite_conversion.fb_pixel_add_to_cart",
-       "value": "159000"
+       "value": "119000"
       },
       {
        "action_type": "view_content",
-       "value": "12597900"
+       "value": "1809000"
       },
       {
        "action_type": "onsite_app_view_content",
-       "value": "11702000"
+       "value": "1690000"
       },
       {
        "action_type": "add_to_cart",
-       "value": "965000"
+       "value": "119000"
       },
       {
        "action_type": "app_custom_event.fb_mobile_content_view",
-       "value": "11702000"
+       "value": "1690000"
       },
       {
        "action_type": "offsite_conversion.fb_pixel_view_content",
-       "value": "895900"
-      },
-      {
-       "action_type": "app_custom_event.fb_mobile_add_to_cart",
-       "value": "806000"
+       "value": "119000"
       },
       {
        "action_type": "omni_add_to_cart",
-       "value": "965000"
+       "value": "119000"
       }
      ]
     },
     {
-     "date_start": "2026-11-15",
+     "date_start": "2026-11-16",
      "product_id": "3415754, 카드할인가 406,600원ㅣ구스 스윙 패브릭 모듈 소파 3/4인(크림화이트/블랙네이비)",
      "actions": [
       {
        "action_type": "link_click",
-       "value": "49"
-      },
-      {
-       "action_type": "post_reaction",
-       "value": "1"
+       "value": "39"
       },
       {
        "action_type": "landing_page_view",
@@ -1231,143 +1195,230 @@
       },
       {
        "action_type": "app_site_visit",
-       "value": "43"
+       "value": "21"
       },
       {
        "action_type": "omni_landing_page_view",
-       "value": "61"
-      },
-      {
-       "action_type": "onsite_conversion.post_unlike",
-       "value": "1"
+       "value": "39"
       },
       {
        "action_type": "post_engagement",
-       "value": "74"
+       "value": "84"
       },
       {
        "action_type": "post_interaction_gross",
-       "value": "3"
+       "value": "1"
       },
       {
        "action_type": "page_engagement",
-       "value": "74"
+       "value": "84"
       },
       {
        "action_type": "post_interaction_net",
-       "value": "2"
+       "value": "1"
       },
       {
        "action_type": "onsite_conversion.post_save",
-       "value": "2"
+       "value": "1"
       },
       {
        "action_type": "onsite_conversion.post_net_save",
-       "value": "2"
-      },
-      {
-       "action_type": "onsite_conversion.post_net_like",
-       "value": "0"
+       "value": "1"
       },
       {
        "action_type": "video_view",
-       "value": "22"
+       "value": "44"
+      }
+     ],
+     "action_values": null,
+     "catalog_segment_actions": [
+      {
+       "action_type": "omni_view_content",
+       "value": "165"
+      },
+      {
+       "action_type": "offsite_conversion.fb_pixel_add_to_cart",
+       "value": "2"
+      },
+      {
+       "action_type": "view_content",
+       "value": "165"
+      },
+      {
+       "action_type": "onsite_app_view_content",
+       "value": "152"
+      },
+      {
+       "action_type": "add_to_cart",
+       "value": "2"
+      },
+      {
+       "action_type": "app_custom_event.fb_mobile_content_view",
+       "value": "152"
+      },
+      {
+       "action_type": "offsite_conversion.fb_pixel_view_content",
+       "value": "13"
+      },
+      {
+       "action_type": "omni_add_to_cart",
+       "value": "2"
+      }
+     ],
+     "catalog_segment_value": [
+      {
+       "action_type": "omni_view_content",
+       "value": "44393998"
+      },
+      {
+       "action_type": "offsite_conversion.fb_pixel_add_to_cart",
+       "value": "1073000"
+      },
+      {
+       "action_type": "view_content",
+       "value": "44393998"
+      },
+      {
+       "action_type": "onsite_app_view_content",
+       "value": "39496998"
+      },
+      {
+       "action_type": "add_to_cart",
+       "value": "1073000"
+      },
+      {
+       "action_type": "app_custom_event.fb_mobile_content_view",
+       "value": "39496998"
+      },
+      {
+       "action_type": "offsite_conversion.fb_pixel_view_content",
+       "value": "4897000"
+      },
+      {
+       "action_type": "omni_add_to_cart",
+       "value": "1073000"
+      }
+     ]
+    },
+    {
+     "date_start": "2026-11-16",
+     "product_id": "3436882, [오늘의집 단독] 차바우 원목 수납 포세린 세라믹 식탁 테이블 4인 6인 1400 1800",
+     "actions": [
+      {
+       "action_type": "link_click",
+       "value": "5"
+      },
+      {
+       "action_type": "landing_page_view",
+       "value": "3"
+      },
+      {
+       "action_type": "app_site_visit",
+       "value": "2"
+      },
+      {
+       "action_type": "omni_landing_page_view",
+       "value": "5"
+      },
+      {
+       "action_type": "post_engagement",
+       "value": "14"
+      },
+      {
+       "action_type": "page_engagement",
+       "value": "14"
+      },
+      {
+       "action_type": "video_view",
+       "value": "9"
       }
      ],
      "action_values": null,
      "catalog_segment_actions": [
       {
        "action_type": "onsite_app_add_to_cart",
-       "value": "10"
+       "value": "2"
       },
       {
        "action_type": "omni_view_content",
-       "value": "138"
-      },
-      {
-       "action_type": "offsite_conversion.fb_pixel_add_to_cart",
-       "value": "1"
+       "value": "55"
       },
       {
        "action_type": "view_content",
-       "value": "138"
+       "value": "55"
       },
       {
        "action_type": "onsite_app_view_content",
-       "value": "134"
+       "value": "52"
       },
       {
        "action_type": "add_to_cart",
-       "value": "11"
+       "value": "2"
       },
       {
        "action_type": "app_custom_event.fb_mobile_content_view",
-       "value": "134"
+       "value": "52"
       },
       {
        "action_type": "offsite_conversion.fb_pixel_view_content",
-       "value": "4"
+       "value": "3"
       },
       {
        "action_type": "app_custom_event.fb_mobile_add_to_cart",
-       "value": "10"
+       "value": "2"
       },
       {
        "action_type": "omni_add_to_cart",
-       "value": "11"
+       "value": "2"
       }
      ],
      "catalog_segment_value": [
       {
        "action_type": "onsite_app_add_to_cart",
-       "value": "3790000"
+       "value": "598900"
       },
       {
        "action_type": "omni_view_content",
-       "value": "41467667"
-      },
-      {
-       "action_type": "offsite_conversion.fb_pixel_add_to_cart",
-       "value": "149000"
+       "value": "13242946"
       },
       {
        "action_type": "view_content",
-       "value": "41467667"
+       "value": "13242946"
       },
       {
        "action_type": "onsite_app_view_content",
-       "value": "40371667"
+       "value": "11905946"
       },
       {
        "action_type": "add_to_cart",
-       "value": "3939000"
+       "value": "598900"
       },
       {
        "action_type": "app_custom_event.fb_mobile_content_view",
-       "value": "40371667"
+       "value": "11905946"
       },
       {
        "action_type": "offsite_conversion.fb_pixel_view_content",
-       "value": "1096000"
+       "value": "1337000"
       },
       {
        "action_type": "app_custom_event.fb_mobile_add_to_cart",
-       "value": "3790000"
+       "value": "598900"
       },
       {
        "action_type": "omni_add_to_cart",
-       "value": "3939000"
+       "value": "598900"
       }
      ]
     }
    ],
-   "campaign_level_purchases": 108.0,
+   "campaign_level_purchases": 117.0,
    "account_level_rows": 348,
-   "account_level_purchases": 108.0,
-   "account_level_value": 23926000,
-   "ad_level_rows": 3274,
-   "ad_level_rows_with_segment": 1600,
-   "ad_level_purchases": 108.0
+   "account_level_purchases": 117.0,
+   "account_level_value": 23905000,
+   "ad_level_rows": 3036,
+   "ad_level_rows_with_segment": 1532,
+   "ad_level_purchases": 117.0
   },
   "4158809747668597": {
    "name": "CJ온스타일 협력광고",
